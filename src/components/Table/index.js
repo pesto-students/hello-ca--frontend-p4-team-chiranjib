@@ -3,7 +3,7 @@
  * Usage
  *
  * <Table
- *      columns={[{label: "col1", accessor: "key1 from data"}]}
+ *      columns={[{label: "col1", accessor: "key1 from data", component: (props) => {...}}]}        //  props contains current col and row.
  *      data={[{name: "ABCD", key: "value"}]}
  * />
  *
@@ -34,7 +34,9 @@ const Table = ({ columns = [], data = [] }) => {
             <tr key={`row-${rowIdx}`}>
               {columns.map((column, colIdx) => (
                 <td key={`column-${rowIdx}-${colIdx}`}>
-                  {row[column.accessor]}
+                  {column?.component
+                    ? column.component({ column, row })
+                    : row[column.accessor]}
                 </td>
               ))}
             </tr>
