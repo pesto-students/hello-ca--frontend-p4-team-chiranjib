@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import CreateAccount from "./pages/CreateAccount";
 import UserDashboard from "./pages/UserDashboard";
 import CaDashboard from "./pages/CaDashboard";
+import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/ca-dashboard" element={<CaDashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
