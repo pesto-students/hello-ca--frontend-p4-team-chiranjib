@@ -1,11 +1,13 @@
 import React from "react";
 import { Avatar, Paper, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../../../../components/Button";
 
 import theme from "../../../../config/theme";
 
 const ProfileCard = () => {
+  const navigate = useNavigate();
   return (
     <Paper
       elevation={0}
@@ -43,6 +45,7 @@ const ProfileCard = () => {
         label={"Update Profile"}
         variant={"primary"}
         fullWidth
+        onClick={() => navigate("/profile")}
       />
     </Paper>
   );
