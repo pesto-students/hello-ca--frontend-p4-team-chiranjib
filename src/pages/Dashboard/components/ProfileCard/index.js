@@ -5,9 +5,12 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../../components/Button";
 
 import theme from "../../../../config/theme";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-const ProfileCard = () => {
+const ProfileCard = (props) => {
   const navigate = useNavigate();
+
   return (
     <Paper
       elevation={0}
@@ -21,23 +24,30 @@ const ProfileCard = () => {
       justifyContent="center"
     >
       <Avatar alt="Remy Sharp" sx={{ width: 125, height: 125, margin: "auto" }}>
-        BK
+        {props?.user?.data?.first_name &&
+          props?.user?.data?.first_name[0].toLocaleUpperCase()}
+        {props?.user?.data?.last_name &&
+          props?.user?.data?.last_name[0].toLocaleUpperCase()}
       </Avatar>
 
       <Typography component="p" fontSize={13} sx={{ mt: 3, color: "gray" }}>
-        Name : First Name Last Name
+        <b>Name :</b> {props?.user?.data?.first_name}{" "}
+        {props?.user?.data?.last_name}
       </Typography>
 
       <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
-        Mobile : +91 00000 00000
+        <b>Mobile :</b> {props?.user?.data?.country_code}{" "}
+        {props?.user?.data?.mobile}
       </Typography>
 
       <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
-        Last Login : 1 Dec 2022, 12 PM
+        <b>Last Login :</b> {props?.user?.data?.last_login}
       </Typography>
 
       <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
-        Last Payment Done : ₹ 100
+        <b>Last Payment Done :</b>{" "}
+        {props?.user?.data?.last_payment &&
+          `₹ ${props?.user?.data?.last_payment}`}
       </Typography>
 
       <Button
@@ -51,4 +61,19 @@ const ProfileCard = () => {
   );
 };
 
-export default ProfileCard;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      // getUserDetails: getUserDetails,
+    },
+    dispatch
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileCard);

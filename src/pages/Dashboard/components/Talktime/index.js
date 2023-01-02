@@ -1,10 +1,12 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import "./style.scss";
 import { Paper, Typography } from "@mui/material";
 
 import Button from "../../../../components/Button";
 
-const Talktime = () => {
+const Talktime = (props) => {
   return (
     <Paper
       elevation={0}
@@ -20,7 +22,7 @@ const Talktime = () => {
       }}
     >
       <Typography component="span" fontSize={70} fontWeight={700}>
-        100
+        {props?.user?.data?.available_talk_time || 0}
         <Typography component="span" fontSize={25}>
           min
         </Typography>
@@ -40,4 +42,19 @@ const Talktime = () => {
   );
 };
 
-export default Talktime;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      // getUserDetails: getUserDetails,
+    },
+    dispatch
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Talktime);
