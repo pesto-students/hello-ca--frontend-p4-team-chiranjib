@@ -1,5 +1,6 @@
 .button {
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 600;
   padding: 10px 20px;
   min-width: 80px;
   background-color: white;
@@ -11,6 +12,11 @@
 .button.primary {
   background-color: #004aad;
   color: white;
+}
+
+.button.secondary:hover {
+  background-color: rgb(227, 237, 253);
+  // color: white;
 }
 
 .button:hover {
