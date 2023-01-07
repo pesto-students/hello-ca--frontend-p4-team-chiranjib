@@ -1,0 +1,13 @@
+.card {
+  border: 2px solid #004aad;
+  padding: 20px;
+}
+
+.card.filled {
+  background-color: #e1f0fb;
+}
+
+.card.primary {
+  background: linear-gradient(to right bottom, #007fff, #003479 120%);
+  color: white;
+}

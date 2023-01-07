@@ -1,0 +1,30 @@
+.welcome-text {
+  color: #004aad;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.topics-wrapper {
+  margin-top: 20px;
+
+  .topic {
+    background-color: white;
+    color: #004aad;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .topic.selected {
+    background-color: #004aad;
+    color: white;
+  }
+}
+
+.get-started-btn {
+  margin-top: 20px;
+}
