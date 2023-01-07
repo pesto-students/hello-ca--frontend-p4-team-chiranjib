@@ -12,6 +12,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Logo from '../components/Logo'
 import theme from '../config/theme'
 
+import Header from './common/Header'
+
 import displayImg from '../assets/img/girl-hero-bg.png';
 
 
@@ -36,6 +38,7 @@ const Login = () => {
     <ThemeProvider theme={theme}>
       <Grid container component='main' sx={{ height: '100vh' }}>
         <CssBaseline />
+        <Header />
         <Grid item component='section' xs={false} sm={false} md={7} sx={{
             backgroundImage: `url(${displayImg})`,
             backgroundRepeat: 'no-repeat',
