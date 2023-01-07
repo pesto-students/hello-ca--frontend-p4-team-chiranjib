@@ -81,7 +81,7 @@ const CreateAccount = () => {
 
     var config = {
       method: 'POST',
-      url: 'https://helloca-backend.onrender.com/auth/register',
+      url: 'https://hello-ca-backend-p4-team-chiranjib.onrender.com/auth/register',
       headers: { 
         //'Authorization': 'Bearer {{authorization}}', 
         'Content-Type': 'application/x-www-form-urlencoded',
