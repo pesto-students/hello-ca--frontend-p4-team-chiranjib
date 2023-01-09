@@ -38,7 +38,7 @@ const Login = () => {
     <ThemeProvider theme={theme}>
       <Grid container component='main' sx={{ height: '100vh' }}>
         <CssBaseline />
-        
+        <Header />
         <Grid item component='section' xs={false} sm={false} md={7} sx={{
             backgroundImage: `url(${displayImg})`,
             backgroundRepeat: 'no-repeat',

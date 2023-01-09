@@ -1,11 +1,11 @@
 //color constants
-$primary : #004aad;
-$primary-dark : #022135;
-$primary-dark-bg : #e1f0fb;
-$primary-light-bg : #fafcfe;
+$primary: #004aad;
+$primary-dark: #022135;
+$primary-dark-bg: #e1f0fb;
+$primary-light-bg: #fafcfe;
 
-$gray-dark : #545454;
-$gray-light : #8f8e8e;
+$gray-dark: #545454;
+$gray-light: #8f8e8e;
 
 body {
   background-color: $primary-light-bg;
@@ -22,4 +22,3 @@ body {
 .MuiInputBase-root {
   padding: 0;
 }
-
