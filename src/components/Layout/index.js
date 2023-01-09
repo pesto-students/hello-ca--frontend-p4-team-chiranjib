@@ -8,10 +8,10 @@ import Header from "./Header";
 
 import theme from "../../config/theme";
 
-const Layout = ({ children, className = "" }) => {
+const Layout = ({ children, className = "", style = {} }) => {
   return (
     <ThemeProvider theme={theme}>
-      <div className={className}>
+      <div className={className} style={style}>
         <CssBaseline />
         <Header />
         <Container>{children}</Container>
