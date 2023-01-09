@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 
-import Home from "./pages/Home";
+import Home from "./pages/Homepage";
 import Services from "./pages/Services";
 import OurProcess from "./pages/OurProcess";
 import GetStarted from "./pages/GetStarted";

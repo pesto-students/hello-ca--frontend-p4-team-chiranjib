@@ -8,13 +8,15 @@ import Header from "./Header";
 
 import theme from "../../config/theme";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, className = "" }) => {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Header />
-      <Container>{children}</Container>
-      <Footer />
+      <div className={className}>
+        <CssBaseline />
+        <Header />
+        <Container>{children}</Container>
+        <Footer />
+      </div>
     </ThemeProvider>
   );
 };
