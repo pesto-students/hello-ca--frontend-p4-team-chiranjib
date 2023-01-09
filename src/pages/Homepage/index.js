@@ -4,7 +4,6 @@ import Layout from "../../components/Layout";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
@@ -26,7 +25,6 @@ const Home = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <CssBaseline />
         <Grid item xs={12} sm={12} md={7} component="section" sx={{ pl: 5 }}>
           <Typography
             variant="h1"
