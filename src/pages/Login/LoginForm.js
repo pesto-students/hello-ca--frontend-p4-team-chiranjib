@@ -49,6 +49,8 @@ const LoginForm = (props) => {
         break;
     }
 
+    if (fieldName !== "otp") setEnableOtp(false);
+
     setResponseError(null);
 
     setFormFields({
