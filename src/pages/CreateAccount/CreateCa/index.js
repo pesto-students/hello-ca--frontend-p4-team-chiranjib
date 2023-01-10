@@ -104,6 +104,7 @@ const CreateUser = (props) => {
         const data = qs.stringify({
           first_name: formFields.firstName,
           last_name: formFields.lastName,
+          member_registration_number: formFields.registrationNumber,
           country_code: "91",
           mobile: formFields.mobileNumber,
           user_type: "CA",
