@@ -1,0 +1,19 @@
+.create-user-container {
+  .create-user-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .input-field-wrapper {
+      margin-bottom: 20px;
+      min-width: 300px;
+    }
+
+    .back-to-home-txt > a {
+      text-align: center;
+      margin-top: 20px;
+      color: gray !important;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+}

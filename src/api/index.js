@@ -9,6 +9,10 @@ export const generateOtpForLogin = (data, headers) => {
   return post(endpoints.GENERATE_OTP_FOR_LOGIN, {}, data, headers);
 };
 
+export const generateOtpForRegister = (data, headers) => {
+  return post(endpoints.GENERATE_OTP_FOR_REGISTER, {}, data, headers);
+};
+
 export const verifyOtp = (data) => {
   return get(endpoints.VERIFY_OTP, data);
 };
