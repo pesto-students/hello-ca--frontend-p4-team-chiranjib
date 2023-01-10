@@ -11,30 +11,32 @@ const instance = axios.create({
 });
 
 export const get = (url, params = {}, headers = {}) => {
-  url += `?${new URLSearchParams(params).toString()}`;
+  if (Object.keys(params).length > 0)
+    url += `?${new URLSearchParams(params).toString()}`;
   return instance.get(url, {
     headers,
   });
 };
 
 export const post = (url, params = {}, data, headers = {}) => {
-  url += `?${new URLSearchParams(params).toString()}`;
-  return instance.post(url, {
+  if (Object.keys(params).length > 0)
+    url += `?${new URLSearchParams(params).toString()}`;
+  return instance.post(url, data, {
     headers,
-    data,
   });
 };
 
 export const put = (url, params = {}, data, headers = {}) => {
-  url += `?${new URLSearchParams(params).toString()}`;
-  return instance.put(url, {
+  if (Object.keys(params).length > 0)
+    url += `?${new URLSearchParams(params).toString()}`;
+  return instance.put(url, data, {
     headers,
-    data,
   });
 };
 
 export const deleteMethod = (url, params = {}, data, headers = {}) => {
-  url += `?${new URLSearchParams(params).toString()}`;
+  if (Object.keys(params).length > 0)
+    url += `?${new URLSearchParams(params).toString()}`;
   return instance.delete(url, {
     headers,
     data,
