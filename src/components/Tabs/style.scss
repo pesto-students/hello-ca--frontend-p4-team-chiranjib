@@ -1,4 +1,4 @@
-.tabs-wrapper {
+.tabs-wrapper-tab-group {
   display: flex;
   align-items: center;
   .tab {
@@ -12,5 +12,22 @@
     border-bottom: none;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+  }
+}
+
+.tabs-wrapper-button-group {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  overflow: hidden;
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #F0F7FC;
+    color: black;
+  }
+  .active-tab {
+    background-color: #004aad;
+    color: white;
   }
 }

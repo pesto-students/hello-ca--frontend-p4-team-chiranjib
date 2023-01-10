@@ -19,9 +19,9 @@ import PropTypes from "prop-types";
 
 import "./style.scss";
 
-const Tabs = ({ tabs, activeTab, handleTabChange }) => {
+const Tabs = ({ tabs, activeTab, handleTabChange, type }) => {
   return (
-    <div className="tabs-wrapper">
+    <div className={`tabs-wrapper${type === "button-group" ? "-button-group" : "-tab-group"}`}>
       {tabs.map((tab) => (
         <div
           className={`tab ${tab.slug === activeTab && "active-tab"}`}
@@ -40,9 +40,11 @@ Tabs.propTypes = {
   tabs: PropTypes.array.isRequired,
   activeTab: PropTypes.string.isRequired,
   handleTabChange: PropTypes.func.isRequired,
+  type: PropTypes.string,
 };
 
 Tabs.defaultProps = {
+  type: "tab-group",
   tabs: [],
   activeTab: "",
   handleTabChange: () => {},
