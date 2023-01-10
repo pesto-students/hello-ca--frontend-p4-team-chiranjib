@@ -9,6 +9,7 @@ import Logo from "../../components/Logo";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Alert from "../../components/Alert";
+import LoaderWrapper from "../../components/Loader";
 
 import "./style.scss";
 
@@ -18,6 +19,7 @@ import { mobileRegex } from "../../utils/constants/regex";
 import { generateOtpForLogin, verifyOtp } from "../../api";
 
 const LoginForm = (props) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formFields, setFormFields] = useState({
     mobileNumber: null,
     otp: null,
@@ -66,6 +68,7 @@ const LoginForm = (props) => {
 
   const handleLogin = async (event) => {
     event?.preventDefault();
+    setIsLoading(true);
     if (!isOTPEnabled) {
       try {
         const data = qs.stringify({
@@ -81,11 +84,14 @@ const LoginForm = (props) => {
 
         if (response && response?.data?.status === 200) {
           setEnableOtp(true);
+          setIsLoading(false);
         } else {
           setResponseError(response?.data?.info);
+          setIsLoading(false);
         }
       } catch (error) {
         console.log("Login Error", error);
+        setIsLoading(false);
       }
     } else {
       try {
@@ -99,12 +105,15 @@ const LoginForm = (props) => {
           //   setEnableOtp(true);
           await localStorage.setItem("authToken", response?.data?.token);
           props.getUserDetails();
+          setIsLoading(false);
           navigate("/dashboard");
         } else {
           setResponseError(response?.data?.info);
+          setIsLoading(false);
         }
       } catch (error) {
         console.log("Verifying OTP Error", error);
+        setIsLoading(false);
       }
     }
   };
@@ -163,6 +172,8 @@ const LoginForm = (props) => {
           Don't have an account? <Link to="/create-account">Register</Link>
         </p>
       </form>
+
+      {isLoading && <LoaderWrapper />}
     </div>
   );
 };
