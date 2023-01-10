@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 
 import MenuItem from "@mui/material/MenuItem";
 import theme from "../../config/theme";
-import Logo from "../../components/Logo";
+import Logo from "../Logo";
 import Button from "../../components/Button";
 import AuthMenu from "./AuthMenu";
 
@@ -48,7 +48,7 @@ function Header(props) {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("authToken")) {
+    if (localStorage.getItem("authToken") && !props?.user?.data) {
       props.getUserDetails();
     }
   }, []);
@@ -58,9 +58,9 @@ function Header(props) {
       <nav>
         <AppBar position="static" elevation={0}>
           <Container maxWidth="lg">
-            <Toolbar disableGutters>
+            <Toolbar disableGutters className="mobile-header-container">
               <Logo />
-              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+              <Box sx={{ display: { xs: "flex", md: "none" } }}>
                 <IconButton
                   size="large"
                   aria-label="account of current user"
@@ -86,7 +86,7 @@ function Header(props) {
                   open={Boolean(anchorElNav)}
                   onClose={handleCloseNavMenu}
                   sx={{
-                    display: { xs: "block", md: "none" },
+                    display: { xs: "block", lg: "none" },
                   }}
                 >
                   {pages.map((page) => (
@@ -98,7 +98,7 @@ function Header(props) {
               </Box>
               <Box
                 sx={{
-                  display: { xs: "none", md: "flex" },
+                  display: { xs: "none", lg: "flex" },
                   marginLeft: "auto",
                 }}
               >
