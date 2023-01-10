@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { ThemeProvider } from "@mui/material/styles";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,19 +11,19 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
+
 import MenuItem from "@mui/material/MenuItem";
 import theme from "../../config/theme";
 import Logo from "../../components/Logo";
-
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import Button from "../../components/Button";
+import AuthMenu from "./AuthMenu";
 
 import {
   getUserDetails,
   removeUserDetails,
 } from "../../store/common/User/actions";
-import AuthMenu from "./AuthMenu";
+
+import { ThemeProvider } from "@mui/material/styles";
 
 const pages = [
   "home",
@@ -101,26 +103,13 @@ function Header(props) {
                 }}
               >
                 {pages.map((page) => (
-                  <Button
-                    component={NavLink}
-                    to={"/" + page.replace(" ", "-")}
-                    style={({ isActive }) => ({
-                      color: isActive ? theme.palette.primary.main : "black",
-                    })}
-                    key={"/" + page.replace(" ", "-")}
-                    underline="none"
-                    onClick={handleCloseNavMenu}
-                    sx={{
-                      my: 2,
-                      color: "#000",
-                      textTransform: "uppercase",
-                      display: "block",
-                      fontSize: 16,
-                      fontWeight: 700,
-                    }}
-                  >
-                    {page}
-                  </Button>
+                  <Link to={`/${page.replace(" ", "-")}`}>
+                    <Button
+                      label={page.toLocaleUpperCase()}
+                      variant={"secondary"}
+                      className="nav-menu"
+                    />
+                  </Link>
                 ))}
               </Box>
               <Box sx={{ display: { xs: "none", md: "flex" }, pl: 2 }}>
