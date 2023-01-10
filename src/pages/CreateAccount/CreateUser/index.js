@@ -119,7 +119,7 @@ const CreateUser = (props) => {
 
         if (response && response?.status === 200 && response?.data?.token) {
           //   setEnableOtp(true);
-          await localStorage.setItem("AuthToken", response?.data?.token);
+          await localStorage.setItem("authToken", response?.data?.token);
           props.getUserDetails();
           navigate("/dashboard");
         } else {

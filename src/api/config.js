@@ -13,6 +13,8 @@ const instance = axios.create({
 export const get = (url, params = {}, headers = {}) => {
   if (Object.keys(params).length > 0)
     url += `?${new URLSearchParams(params).toString()}`;
+  let authToken = localStorage.getItem("authToken");
+  if (authToken) headers.Authorization = `Bearer ${authToken}`;
   return instance.get(url, {
     headers,
   });
@@ -21,6 +23,8 @@ export const get = (url, params = {}, headers = {}) => {
 export const post = (url, params = {}, data, headers = {}) => {
   if (Object.keys(params).length > 0)
     url += `?${new URLSearchParams(params).toString()}`;
+  let authToken = localStorage.getItem("authToken");
+  if (authToken) headers.Authorization = `Bearer ${authToken}`;
   return instance.post(url, data, {
     headers,
   });
@@ -29,6 +33,8 @@ export const post = (url, params = {}, data, headers = {}) => {
 export const put = (url, params = {}, data, headers = {}) => {
   if (Object.keys(params).length > 0)
     url += `?${new URLSearchParams(params).toString()}`;
+  let authToken = localStorage.getItem("authToken");
+  if (authToken) headers.Authorization = `Bearer ${authToken}`;
   return instance.put(url, data, {
     headers,
   });
@@ -37,6 +43,8 @@ export const put = (url, params = {}, data, headers = {}) => {
 export const deleteMethod = (url, params = {}, data, headers = {}) => {
   if (Object.keys(params).length > 0)
     url += `?${new URLSearchParams(params).toString()}`;
+  let authToken = localStorage.getItem("authToken");
+  if (authToken) headers.Authorization = `Bearer ${authToken}`;
   return instance.delete(url, {
     headers,
     data,
