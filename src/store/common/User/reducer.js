@@ -2,6 +2,7 @@ import {
   USER_DETAILS_LOADING,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_ERROR,
+  REMOVE_USER_DETAILS,
 } from "./constants";
 
 const initialState = {
@@ -34,6 +35,14 @@ const userReducer = (state = initialState, action) => {
         loading: false,
         data: null,
         error: action.error,
+      };
+
+    case REMOVE_USER_DETAILS:
+      return {
+        ...state,
+        loading: false,
+        data: null,
+        error: null,
       };
 
     default:

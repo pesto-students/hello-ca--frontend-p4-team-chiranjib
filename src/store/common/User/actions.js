@@ -2,6 +2,7 @@ import {
   USER_DETAILS_LOADING,
   USER_DETAILS_SUCCESS,
   USER_DETAILS_ERROR,
+  REMOVE_USER_DETAILS,
 } from "./constants";
 
 import { getUserDetails as getUserDetailsApi } from "../../../api/index";
@@ -38,5 +39,11 @@ export const storeUserDetailsError = (error) => {
   return {
     type: USER_DETAILS_ERROR,
     error,
+  };
+};
+
+export const removeUserDetails = () => {
+  return {
+    type: REMOVE_USER_DETAILS,
   };
 };

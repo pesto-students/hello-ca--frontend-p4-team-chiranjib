@@ -1,3 +1,36 @@
 .login-btn {
   margin-right: 10px;
 }
+
+.auth-container {
+  position: relative;
+  .auth-text {
+    display: flex;
+    align-items: center;
+  }
+  .options-wrapper {
+    position: absolute;
+    top: 45px;
+    right: 0px;
+    background-color: #e1f0fb;
+    border: 1px solid #004aad;
+    border-radius: 16px;
+    width: 160px;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    .auth-menu-option {
+      padding: 10px 16px;
+      border-bottom: 1px solid #b3defd;
+      cursor: pointer;
+    }
+    .auth-menu-option:last-child {
+      border-bottom: none;
+    }
+    .auth-menu-option:hover {
+      background-color: #004aad;
+      color: white;
+    }
+  }
+}

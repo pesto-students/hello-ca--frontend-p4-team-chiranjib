@@ -17,7 +17,10 @@ import Logo from "../../components/Logo";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { getUserDetails } from "../../store/common/User/actions";
+import {
+  getUserDetails,
+  removeUserDetails,
+} from "../../store/common/User/actions";
 import AuthMenu from "./AuthMenu";
 
 const pages = [
@@ -121,7 +124,11 @@ function Header(props) {
                 ))}
               </Box>
               <Box sx={{ display: { xs: "none", md: "flex" }, pl: 2 }}>
-                <AuthMenu user={props.user.data} isLoading={props?.user?.loading}/>
+                <AuthMenu
+                  user={props.user.data}
+                  isLoading={props?.user?.loading}
+                  logout={props.removeUserDetails}
+                />
               </Box>
             </Toolbar>
           </Container>
@@ -141,6 +148,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       getUserDetails: getUserDetails,
+      removeUserDetails: removeUserDetails,
     },
     dispatch
   );

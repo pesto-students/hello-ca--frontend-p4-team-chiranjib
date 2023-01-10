@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import ContentLoader from "react-content-loader";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../Button";
+
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import "./style.scss";
 
@@ -16,12 +18,47 @@ const Loader = () => {
   );
 };
 
-const AuthMenu = ({ user, isLoading }) => {
+const AuthMenu = ({ user, isLoading, logout }) => {
   const navigate = useNavigate();
+  const [showAuthMenu, setShowAuthMenu] = useState(false);
   return isLoading ? (
     <Loader />
   ) : user ? (
-    <Button label={user && `Hi, ${user?.first_name} ${user?.last_name}`} />
+    <div className="auth-container">
+      <Button
+        label={
+          <span className="auth-text">
+            {user && `Hi, ${user?.first_name} ${user?.last_name}`}{" "}
+            <ArrowDropDownIcon />
+          </span>
+        }
+        onClick={() => setShowAuthMenu(!showAuthMenu)}
+      />
+      {showAuthMenu && (
+        <ul className="options-wrapper">
+          <li
+            className="auth-menu-option"
+            onClick={() => {
+              setShowAuthMenu(false);
+              navigate("/dashboard");
+            }}
+          >
+            My Dashboard
+          </li>
+          <li
+            className="auth-menu-option"
+            onClick={() => {
+              setShowAuthMenu(false);
+              localStorage.removeItem("authToken");
+              logout();
+              navigate("/");
+            }}
+          >
+            Logout
+          </li>
+        </ul>
+      )}
+    </div>
   ) : (
     <>
       <Button
