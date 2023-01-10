@@ -16,7 +16,7 @@ const Login = () => {
 
   return (
     <Layout className="login-container">
-      <Grid container>
+      <Grid container alignItems="center">
         <Grid item md={6}>
           <div
             className="login-image-container"

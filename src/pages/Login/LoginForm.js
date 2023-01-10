@@ -1,86 +1,183 @@
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  Link,
-  OutlinedInput,
-  Typography,
-  Grid,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import qs from "qs";
+import { Typography } from "@mui/material";
+
 import Logo from "../../components/Logo";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
+import Alert from "../../components/Alert";
 
 import "./style.scss";
 
-const LoginForm = () => {
-  const handleLogin = (event) => {
-    console.log("Login");
+import { getUserDetails } from "../../store/common/User/actions";
+
+import { mobileRegex } from "../../utils/constants/regex";
+import { generateOtpForLogin, verifyOtp } from "../../api";
+
+const LoginForm = (props) => {
+  const [formFields, setFormFields] = useState({
+    mobileNumber: null,
+    otp: null,
+  });
+  const [errors, setErrors] = useState({
+    mobileNumber: null,
+    otp: null,
+  });
+  const [isOTPEnabled, setEnableOtp] = useState(false);
+  const [responseError, setResponseError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleChange = (event) => {
+    let fieldName = event.target.name;
+    let fieldValue = event.target.value;
+
+    let error = errors[fieldName];
+
+    switch (fieldName) {
+      case "mobileNumber":
+        if (fieldValue && mobileRegex.test(fieldValue)) {
+          error = "";
+        } else {
+          error = "Inavlid Mobile Numner";
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    setResponseError(null);
+
+    setFormFields({
+      ...formFields,
+      [fieldName]: fieldValue,
+    });
+
+    setErrors({
+      ...errors,
+      [fieldName]: error,
+    });
   };
+
+  const handleLogin = async (event) => {
+    event?.preventDefault();
+    if (!isOTPEnabled) {
+      try {
+        const data = qs.stringify({
+          country_code: "91",
+          mobile: formFields.mobileNumber,
+        });
+
+        const headers = {
+          "content-type": "application/x-www-form-urlencoded",
+        };
+
+        const response = await generateOtpForLogin(data, headers);
+
+        if (response && response?.data?.status === 200) {
+          setEnableOtp(true);
+        } else {
+          setResponseError(response?.data?.info);
+        }
+      } catch (error) {
+        console.log("Login Error", error);
+      }
+    } else {
+      try {
+        const response = await verifyOtp({
+          country_code: "91",
+          mobile: formFields.mobileNumber,
+          otp: formFields.otp,
+        });
+
+        if (response && response?.status === 200 && response?.data?.token) {
+          //   setEnableOtp(true);
+          await localStorage.setItem("AuthToken", response?.data?.token);
+          props.getUserDetails();
+          navigate("/dashboard");
+        } else {
+          setResponseError(response?.data?.info);
+        }
+      } catch (error) {
+        console.log("Verifying OTP Error", error);
+      }
+    }
+  };
+
   return (
     <div className="login-form-container">
       <Logo />
       <Typography component="h1" variant="h1" sx={{ mb: 4 }}>
         Login
       </Typography>
+
       <Typography component="div" variant="p" sx={{ mb: 4 }}>
         Welcome Back !
       </Typography>
-      <Box component="form" noValidate onSubmit={handleLogin} sx={{ mt: 1 }}>
-        <FormControl sx={{ mb: 4 }}>
-          <InputLabel>Please Enter Mobile</InputLabel>
-          <OutlinedInput
-            name="mobile"
-            placeholder="00000 00000"
-            autoFocus
-            required
-          />
-        </FormControl>
 
-        <FormControl sx={{ mb: 2 }}>
-          <InputLabel>Please Enter OTP</InputLabel>
-          <OutlinedInput
+      <form className="login-form">
+        {responseError && (
+          <Alert
+            message={responseError}
+            type="error"
+            className="custom-alert-wrapper"
+          />
+        )}
+
+        <Input
+          label="Mobile Number"
+          name="mobileNumber"
+          className="input-field-wrapper"
+          placeholder="Please enter Mobile number"
+          onChange={handleChange}
+          value={formFields.mobileNumber}
+          error={errors.mobileNumber}
+        />
+
+        {isOTPEnabled && (
+          <Input
+            label="OTP"
             name="otp"
-            placeholder="Please Enter OTP"
-            type="password"
-            required
+            className="input-field-wrapper"
+            placeholder="Please enter OTP"
+            onChange={handleChange}
+            value={formFields.otp}
+            error={errors.otp}
           />
-        </FormControl>
+        )}
 
-        <FormControl
-          sx={{
-            mt: 3,
-            mb: 3,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Button type="submit" variant="contained" size="large" componant="">
-            Login
-          </Button>
-        </FormControl>
+        <div className="login-btn-container">
+          <Button
+            label={!isOTPEnabled ? "Generate OTP" : "Login"}
+            type="submit"
+            onClick={handleLogin}
+          />
+        </div>
 
-        <Grid
-          container
-          sx={{
-            my: 4,
-            pl: 10,
-            pr: 10,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Grid item>
-            <Link href="/create-account" variant="body1">
-              {"Don't have an account"}
-            </Link>
-          </Grid>
-        </Grid>
-      </Box>
+        <p className="register-text">
+          Don't have an account? <Link to="/create-account">Register</Link>
+        </p>
+      </form>
     </div>
   );
 };
 
-export default LoginForm;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      getUserDetails: getUserDetails,
+    },
+    dispatch
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
