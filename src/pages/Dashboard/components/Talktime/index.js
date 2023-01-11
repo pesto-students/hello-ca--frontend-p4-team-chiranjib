@@ -5,6 +5,7 @@ import "./style.scss";
 import { Paper, Typography } from "@mui/material";
 
 import Button from "../../../../components/Button";
+import { post } from "../../../../api/config";
 
 const Talktime = (props) => {
 
@@ -32,7 +33,7 @@ const Talktime = (props) => {
       return;
     }
 
-    const result = await axios.post('/payment/orders');
+    const result = await post('/payment/orders');
 
     if (!result) {
       alert('Server error.');
@@ -47,7 +48,7 @@ const Talktime = (props) => {
       currency: currency,
       name: 'Hello CA',
       description: 'Hello CA. CA on Call',
-      image: { logo },
+      // image: { logo },
       order_id: order_id,
       handler: async function (response) {
         const data = {
@@ -57,7 +58,7 @@ const Talktime = (props) => {
           razorpaySignature: response.razorpay_signature,
         };
 
-        const result = await axios.post('/payment/success', data);
+        const result = await post('/payment/success', data);
 
         alert(result.data.msg);
       },
