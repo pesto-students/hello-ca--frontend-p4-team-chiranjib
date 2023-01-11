@@ -1,4 +1,6 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
 
 import TopicsLoader from "./TopicsLoader";
@@ -8,13 +10,14 @@ import "./style.scss";
 
 import useTopics from "./useTopics";
 
-const Topics = () => {
+const Topics = (props) => {
   const {
     isTopicsLoading,
     topics,
     selectedTopics,
     handleTopicsSelection,
     startCall,
+    updateSpecilizaions,
   } = useTopics();
 
   return (
@@ -40,12 +43,21 @@ const Topics = () => {
           )}
         </Grid>
 
-        <Button
-          label={"Get Started"}
-          className="get-started-btn"
-          onClick={startCall}
-          disabled={selectedTopics.length === 0}
-        />
+        {props?.user?.data?.user_type === "USER" ? (
+          <Button
+            label={"Get Started"}
+            className="get-started-btn"
+            onClick={startCall}
+            disabled={selectedTopics.length === 0}
+          />
+        ) : props?.user?.data?.user_type === "CA" ? (
+          <Button
+            label={"Update Specialization"}
+            className="get-started-btn"
+            onClick={updateSpecilizaions}
+            disabled={selectedTopics === props?.user?.data?.specialization}
+          />
+        ) : null}
       </Grid>
 
       <Grid xs={6}>{/* Image */}</Grid>
@@ -53,4 +65,19 @@ const Topics = () => {
   );
 };
 
-export default Topics;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      // getUserDetails: getUserDetails,
+    },
+    dispatch
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Topics);

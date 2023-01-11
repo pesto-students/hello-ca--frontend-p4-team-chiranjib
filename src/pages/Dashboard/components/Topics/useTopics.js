@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { getTopics } from "../../../../api";
 
 const useTopics = () => {
   const [topics, setTopics] = useState(null);
   const [isTopicsLoading, setIsTopicsLoading] = useState(false);
   const [selectedTopics, setSelectedTopics] = useState([]);
+
+  const user = useSelector((state) => state.user);
 
   const getTopicsWrapper = async () => {
     setIsTopicsLoading(true);
@@ -36,16 +39,29 @@ const useTopics = () => {
     console.log(selectedTopics);
   };
 
+  const updateSpecilizaions = () => {
+    //  start call.
+    console.log(selectedTopics);
+  };
+
   useEffect(() => {
     getTopicsWrapper();
   }, []);
+
+  useEffect(() => {
+    if (user?.data) {
+      //    Setting default specilizations
+      setSelectedTopics(user?.data?.specialization);
+    }
+  }, [user?.data]);
 
   return {
     isTopicsLoading,
     topics,
     selectedTopics,
     handleTopicsSelection,
-    startCall
+    startCall,
+    updateSpecilizaions
   };
 };
 
