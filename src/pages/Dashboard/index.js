@@ -29,7 +29,12 @@ const Dashboard = (props) => {
               <b>
                 {props?.user?.data?.first_name} {props?.user?.data?.last_name}
               </b>
-              , get started with a call
+              ,{" "}
+              {props.user?.data?.user_type === "USER"
+                ? "get started with a call"
+                : props.user?.data?.user_type === "CA"
+                ? "enable topics to get calls"
+                : ""}
             </Typography>
 
             <Topics />
