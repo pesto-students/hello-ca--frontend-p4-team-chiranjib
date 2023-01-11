@@ -7,6 +7,78 @@ import { Paper, Typography } from "@mui/material";
 import Button from "../../../../components/Button";
 
 const Talktime = (props) => {
+
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
+
+  async function displayRazorpay() {
+    const res = await loadScript(
+      'https://checkout.razorpay.com/v1/checkout.js'
+    );
+
+    if (!res) {
+      alert('Payments server failed connect.');
+      return;
+    }
+
+    const result = await axios.post('/payment/orders');
+
+    if (!result) {
+      alert('Server error.');
+      return;
+    }
+
+    const { amount, id: order_id, currency } = result.data;
+
+    const options = {
+      key: 'rzp_test_YiNyYHELyL02vz', // Enter the Key ID generated from the Dashboard
+      amount: amount.toString(),
+      currency: currency,
+      name: 'Hello CA',
+      description: 'Hello CA. CA on Call',
+      image: { logo },
+      order_id: order_id,
+      handler: async function (response) {
+        const data = {
+          orderCreationId: order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        };
+
+        const result = await axios.post('/payment/success', data);
+
+        alert(result.data.msg);
+      },
+      prefill: {
+        name: 'bhushan Kulawade',
+        email: 'bhushanjkulawade@gmail.com',
+        contact: '9594996070',
+      },
+      notes: {
+        address: 'sample address of mumbai',
+      },
+      theme: {
+        color: '#61dafb',
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
+
+
   return (
     <Paper
       elevation={0}
@@ -37,6 +109,7 @@ const Talktime = (props) => {
         label={"Add Talk Time"}
         variant={"secondary"}
         fullWidth
+        onClick={displayRazorpay}
       />
     </Paper>
   );
