@@ -5,8 +5,10 @@ import Tabs from "../../../../components/Tabs";
 import useHistoryHook from "./useHistory.hook";
 
 import "./style.scss";
+
 import CallHistory from "./CallHistory";
 import RechargeHistory from "./RechargeHistory";
+import PayoutHistory from "./PayoutHistory";
 
 const History = () => {
   const { tabs, activeTab, handleTabChange } = useHistoryHook();
@@ -18,7 +20,13 @@ const History = () => {
         activeTab={activeTab}
         handleTabChange={handleTabChange}
       />
-      {activeTab === "CALL_HISTORY" ? <CallHistory /> : <RechargeHistory />}
+      {activeTab === "CALL_HISTORY" ? (
+        <CallHistory />
+      ) : activeTab === "RECHARGE_HISTORY" ? (
+        <RechargeHistory />
+      ) : activeTab === "PAYOUT_HISTORY" ? (
+        <PayoutHistory />
+      ) : null}
     </div>
   );
 };

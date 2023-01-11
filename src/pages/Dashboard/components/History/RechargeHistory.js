@@ -13,6 +13,7 @@ const RechargeHistory = () => {
         {
           label: "Total Amount",
           accessor: "totalAmount",
+          component: (props) => <p>₹ {props?.row?.totalAmount}</p>,
         },
         {
           label: "Mins",
@@ -26,7 +27,7 @@ const RechargeHistory = () => {
               style={{
                 color:
                   props?.row?.paymentStatus === "success" ? "green" : "red",
-                  margin: 0,
+                margin: 0,
               }}
             >
               {props?.row?.paymentStatus}
