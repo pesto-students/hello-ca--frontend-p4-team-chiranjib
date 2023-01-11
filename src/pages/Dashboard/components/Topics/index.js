@@ -1,51 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Grid from "@mui/material/Grid";
-import TopicsLoader from "./TopicsLoader";
 
+import TopicsLoader from "./TopicsLoader";
 import Button from "../../../../components/Button";
 
 import "./style.scss";
 
-import { getTopics } from "../../../../api";
+import useTopics from "./useTopics";
 
 const Topics = () => {
-  const [topics, setTopics] = useState(null);
-  const [isTopicsLoading, setIsTopicsLoading] = useState(false);
-  const [selectedTopics, setSelectedTopics] = useState([]);
-
-  const getTopicsWrapper = async () => {
-    setIsTopicsLoading(true);
-
-    try {
-      const response = await getTopics();
-
-      setIsTopicsLoading(false);
-      if (response?.data?.status === 200) {
-        setTopics(response?.data?.topics);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getTopicsWrapper();
-  }, []);
-
-  const handleTopicsSelection = (topic) => {
-    if (selectedTopics.includes(topic)) {
-      setSelectedTopics(
-        selectedTopics.filter((selectedTopic) => selectedTopic !== topic)
-      );
-    } else {
-      setSelectedTopics([...selectedTopics, topic]);
-    }
-  };
-
-  const startCall = () => {
-    //  start call.
-    console.log(selectedTopics);
-  };
+  const {
+    isTopicsLoading,
+    topics,
+    selectedTopics,
+    handleTopicsSelection,
+    startCall,
+  } = useTopics();
 
   return (
     <Grid container className="topics-wrapper">
