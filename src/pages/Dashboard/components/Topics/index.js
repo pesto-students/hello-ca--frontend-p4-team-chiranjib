@@ -22,7 +22,7 @@ const Topics = (props) => {
 
   return (
     <Grid container className="topics-wrapper">
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <Grid container spacing={1}>
           {isTopicsLoading ? (
             <TopicsLoader />

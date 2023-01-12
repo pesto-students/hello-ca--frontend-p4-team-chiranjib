@@ -1,3 +1,9 @@
 .history-container {
   margin-top: 20px;
+  .table-wrapper {
+    overflow: scroll;
+    .table {
+      min-width: 600px;
+    }
+  }
 }

@@ -20,13 +20,15 @@ const History = () => {
         activeTab={activeTab}
         handleTabChange={handleTabChange}
       />
-      {activeTab === "CALL_HISTORY" ? (
-        <CallHistory />
-      ) : activeTab === "RECHARGE_HISTORY" ? (
-        <RechargeHistory />
-      ) : activeTab === "PAYOUT_HISTORY" ? (
-        <PayoutHistory />
-      ) : null}
+      <div className="table-wrapper">
+        {activeTab === "CALL_HISTORY" ? (
+          <CallHistory />
+        ) : activeTab === "RECHARGE_HISTORY" ? (
+          <RechargeHistory />
+        ) : activeTab === "PAYOUT_HISTORY" ? (
+          <PayoutHistory />
+        ) : null}
+      </div>
     </div>
   );
 };
