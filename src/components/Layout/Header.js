@@ -24,6 +24,7 @@ import {
 } from "../../store/common/User/actions";
 
 import { ThemeProvider } from "@mui/material/styles";
+import AuthMenuMobile from "./AuthMenuMobile";
 
 const pages = [
   "home",
@@ -94,6 +95,7 @@ function Header(props) {
                       <Typography textAlign="center">{page}</Typography>
                     </MenuItem>
                   ))}
+                  <AuthMenuMobile />
                 </Menu>
               </Box>
               <Box
