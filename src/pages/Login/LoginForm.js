@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useDispatch, useSelector } from "react-redux";
 import qs from "qs";
 import { Typography } from "@mui/material";
 
@@ -18,7 +17,7 @@ import { getUserDetails } from "../../store/common/User/actions";
 import { mobileRegex } from "../../utils/constants/regex";
 import { generateOtpForLogin, verifyOtp } from "../../api";
 
-const LoginForm = (props) => {
+const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formFields, setFormFields] = useState({
     mobileNumber: null,
@@ -30,6 +29,10 @@ const LoginForm = (props) => {
   });
   const [isOTPEnabled, setEnableOtp] = useState(false);
   const [responseError, setResponseError] = useState(null);
+
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -104,7 +107,7 @@ const LoginForm = (props) => {
         if (response && response?.status === 200 && response?.data?.token) {
           //   setEnableOtp(true);
           await localStorage.setItem("authToken", response?.data?.token);
-          props.getUserDetails();
+          dispatch(getUserDetails());
           setIsLoading(false);
           navigate("/dashboard");
         } else {
@@ -179,19 +182,4 @@ const LoginForm = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      getUserDetails: getUserDetails,
-    },
-    dispatch
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default LoginForm;

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useDispatch, useSelector } from "react-redux";
 import qs from "qs";
 
 import Button from "../../../components/Button";
@@ -16,7 +15,7 @@ import { getUserDetails } from "../../../store/common/User/actions";
 import { charRegex, mobileRegex } from "../../../utils/constants/regex";
 import { generateOtpForRegister, verifyOtp } from "../../../api";
 
-const CreateUser = (props) => {
+const CreateUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formFields, setFormFields] = useState({
     firstName: null,
@@ -34,6 +33,10 @@ const CreateUser = (props) => {
   });
   const [isOTPEnabled, setEnableOtp] = useState(false);
   const [responseError, setResponseError] = useState(null);
+
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -138,7 +141,7 @@ const CreateUser = (props) => {
         if (response && response?.status === 200 && response?.data?.token) {
           //   setEnableOtp(true);
           await localStorage.setItem("authToken", response?.data?.token);
-          props.getUserDetails();
+          dispatch(getUserDetails());
           setIsLoading(false);
           navigate("/dashboard");
         } else {
@@ -234,19 +237,4 @@ const CreateUser = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      getUserDetails: getUserDetails,
-    },
-    dispatch
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateUser);
+export default CreateUser;
