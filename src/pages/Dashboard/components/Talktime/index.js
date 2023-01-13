@@ -1,17 +1,20 @@
-import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import "./style.scss";
 import { Paper, Typography } from "@mui/material";
 
 import Button from "../../../../components/Button";
+import Switch from "../../../../components/Switch";
+
 import { post } from "../../../../api/config";
 
-const Talktime = (props) => {
+const Talktime = () => {
+  const user = useSelector((state) => state.user);
+  const [status, setStatus] = useState(false);
 
   function loadScript(src) {
     return new Promise((resolve) => {
-      const script = document.createElement('script');
+      const script = document.createElement("script");
       script.src = src;
       script.onload = () => {
         resolve(true);
@@ -25,29 +28,29 @@ const Talktime = (props) => {
 
   async function displayRazorpay() {
     const res = await loadScript(
-      'https://checkout.razorpay.com/v1/checkout.js'
+      "https://checkout.razorpay.com/v1/checkout.js"
     );
 
     if (!res) {
-      alert('Payments server failed connect.');
+      alert("Payments server failed connect.");
       return;
     }
 
-    const result = await post('/payment/orders');
+    const result = await post("/payment/orders");
 
     if (!result) {
-      alert('Server error.');
+      alert("Server error.");
       return;
     }
 
     const { amount, id: order_id, currency } = result.data;
 
     const options = {
-      key: 'rzp_test_YiNyYHELyL02vz', // Enter the Key ID generated from the Dashboard
+      key: "rzp_test_YiNyYHELyL02vz", // Enter the Key ID generated from the Dashboard
       amount: amount.toString(),
       currency: currency,
-      name: 'Hello CA',
-      description: 'Hello CA. CA on Call',
+      name: "Hello CA",
+      description: "Hello CA. CA on Call",
       // image: { logo },
       order_id: order_id,
       handler: async function (response) {
@@ -58,20 +61,20 @@ const Talktime = (props) => {
           razorpaySignature: response.razorpay_signature,
         };
 
-        const result = await post('/payment/success', data);
+        const result = await post("/payment/success", data);
 
         alert(result.data.msg);
       },
       prefill: {
-        name: 'bhushan Kulawade',
-        email: 'bhushanjkulawade@gmail.com',
-        contact: '9594996070',
+        name: "bhushan Kulawade",
+        email: "bhushanjkulawade@gmail.com",
+        contact: "9594996070",
       },
       notes: {
-        address: 'sample address of mumbai',
+        address: "sample address of mumbai",
       },
       theme: {
-        color: '#61dafb',
+        color: "#61dafb",
       },
     };
 
@@ -79,6 +82,9 @@ const Talktime = (props) => {
     paymentObject.open();
   }
 
+  const handleStatusChange = (event) => {
+    setStatus(event.target.checked); //  true means online, false means offline.
+  };
 
   return (
     <Paper
@@ -94,41 +100,48 @@ const Talktime = (props) => {
         color: "#fff",
       }}
     >
-      <Typography component="span" fontSize={70} fontWeight={700}>
-        {props?.user?.data?.available_talk_time || 0}
-        <Typography component="span" fontSize={25}>
-          min
-        </Typography>
-      </Typography>
+      {user?.data?.user_type === "USER" ? (
+        <>
+          <Typography component="span" fontSize={70} fontWeight={700}>
+            {user?.data?.available_talk_time || 0}
+            <Typography component="span" fontSize={25}>
+              min
+            </Typography>
+          </Typography>
 
-      <Typography component="span" fontSize={18} sx={{ mt: -1 }}>
-        Available Talk Time
-      </Typography>
+          <Typography component="span" fontSize={18} sx={{ mt: -1 }}>
+            Available Talk Time
+          </Typography>
 
-      <Button
-        className="add-talktime-btn"
-        label={"Add Talk Time"}
-        variant={"secondary"}
-        fullWidth
-        onClick={displayRazorpay}
-      />
+          <Button
+            className="add-talktime-btn"
+            label={"Add Talk Time"}
+            variant={"secondary"}
+            fullWidth
+            onClick={displayRazorpay}
+          />
+        </>
+      ) : user?.data?.user_type === "CA" ? (
+        <>
+          <div className="switch-wrapper">
+            <Switch
+              className="custom-switch"
+              checked={status}
+              handleChange={handleStatusChange}
+            />
+            Status {status ? "Online" : "Offline"}
+          </div>
+          <Typography component="span" fontSize={70} fontWeight={700}>
+            ₹ {user?.data?.total_amount_earned || 0}
+          </Typography>
+
+          <Typography component="span" fontSize={18} sx={{ mt: -1 }}>
+            Total Amount Earned
+          </Typography>
+        </>
+      ) : null}
     </Paper>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      // getUserDetails: getUserDetails,
-    },
-    dispatch
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Talktime);
+export default Talktime;
