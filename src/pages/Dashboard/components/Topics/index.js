@@ -2,6 +2,9 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Grid from "@mui/material/Grid";
+import { Typography } from "@mui/material";
+
+import InfoIcon from "@mui/icons-material/Info";
 
 import TopicsLoader from "./TopicsLoader";
 import Button from "../../../../components/Button";
@@ -22,7 +25,7 @@ const Topics = (props) => {
 
   return (
     <Grid container className="topics-wrapper">
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={7}>
         <Grid container spacing={1}>
           {isTopicsLoading ? (
             <TopicsLoader />
@@ -51,16 +54,22 @@ const Topics = (props) => {
             disabled={selectedTopics.length === 0}
           />
         ) : props?.user?.data?.user_type === "CA" ? (
-          <Button
-            label={"Update Specialization"}
-            className="get-started-btn"
-            onClick={updateSpecilizaions}
-            disabled={selectedTopics === props?.user?.data?.specialization}
-          />
+          <>
+            <Button
+              label={"Update Specialization"}
+              className="get-started-btn"
+              onClick={updateSpecilizaions}
+              disabled={selectedTopics === props?.user?.data?.specialization}
+            />
+            <Typography className="ca-info-text">
+              <InfoIcon className="ca-info-icons"fontSize="sm" />
+              You will get calls based on your specialization selection
+            </Typography>
+          </>
         ) : null}
       </Grid>
 
-      <Grid xs={6}>{/* Image */}</Grid>
+      <Grid xs={12} md={5}>{/* Image */}</Grid>
     </Grid>
   );
 };

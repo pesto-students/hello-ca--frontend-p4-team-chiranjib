@@ -100,7 +100,7 @@ function Header(props) {
               </Box>
               <Box
                 sx={{
-                  display: { xs: "none", lg: "flex" },
+                  display: { xs: "none", md: "flex" },
                   marginLeft: "auto",
                 }}
               >
