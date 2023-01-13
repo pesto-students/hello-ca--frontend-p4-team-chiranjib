@@ -157,6 +157,7 @@ const LoginForm = (props) => {
             onChange={handleChange}
             value={formFields.otp}
             error={errors.otp}
+            autoFocus
           />
         )}
 

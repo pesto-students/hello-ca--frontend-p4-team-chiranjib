@@ -212,12 +212,13 @@ const CreateUser = (props) => {
             onChange={handleChange}
             value={formFields.otp}
             error={errors.otp}
+            autoFocus
           />
         )}
 
         <div className="login-btn-container">
           <Button
-            label={!isOTPEnabled ? "Generate OTP" : "Login"}
+            label={!isOTPEnabled ? "Generate OTP" : "Create Account"}
             type="submit"
             onClick={handleLogin}
           />
