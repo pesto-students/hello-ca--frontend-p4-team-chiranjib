@@ -1,6 +1,5 @@
 import React from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
 
@@ -13,7 +12,7 @@ import "./style.scss";
 
 import useTopics from "./useTopics";
 
-const Topics = (props) => {
+const Topics = () => {
   const {
     isTopicsLoading,
     topics,
@@ -22,6 +21,8 @@ const Topics = (props) => {
     startCall,
     updateSpecilizaions,
   } = useTopics();
+
+  const user = useSelector((state) => state.user);
 
   return (
     <Grid container className="topics-wrapper">
@@ -46,20 +47,20 @@ const Topics = (props) => {
           )}
         </Grid>
 
-        {props?.user?.data?.user_type === "USER" ? (
+        {user?.data?.user_type === "USER" ? (
           <Button
             label={"Get Started"}
             className="get-started-btn"
             onClick={startCall}
             disabled={selectedTopics.length === 0}
           />
-        ) : props?.user?.data?.user_type === "CA" ? (
+        ) : user?.data?.user_type === "CA" ? (
           <>
             <Button
               label={"Update Specialization"}
               className="get-started-btn"
               onClick={updateSpecilizaions}
-              disabled={selectedTopics === props?.user?.data?.specialization}
+              disabled={selectedTopics === user?.data?.specialization}
             />
             <Typography className="ca-info-text">
               <InfoIcon className="ca-info-icons"fontSize="sm" />
@@ -74,19 +75,4 @@ const Topics = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      // getUserDetails: getUserDetails,
-    },
-    dispatch
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Topics);
+export default Topics;

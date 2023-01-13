@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import ContentLoader from "react-content-loader";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Button from "../Button";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
+import { removeUserDetails } from "../../store/common/User/actions";
 
 import "./style.scss";
 
@@ -18,17 +21,21 @@ const Loader = () => {
   );
 };
 
-const AuthMenu = ({ user, isLoading, logout }) => {
+const AuthMenu = () => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showAuthMenu, setShowAuthMenu] = useState(false);
-  return isLoading ? (
+
+  return user?.isLoading ? (
     <Loader />
-  ) : user ? (
+  ) : user?.data ? (
     <div className="auth-container">
       <Button
         label={
           <span className="auth-text">
-            {user && `Hi, ${user?.first_name} ${user?.last_name}`}{" "}
+            {user?.data &&
+              `Hi, ${user?.data?.first_name} ${user?.data?.last_name}`}{" "}
             <ArrowDropDownIcon />
           </span>
         }
@@ -50,7 +57,7 @@ const AuthMenu = ({ user, isLoading, logout }) => {
             onClick={() => {
               setShowAuthMenu(false);
               localStorage.removeItem("authToken");
-              logout();
+              dispatch(removeUserDetails());
               navigate("/");
             }}
           >

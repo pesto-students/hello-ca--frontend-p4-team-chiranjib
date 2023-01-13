@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
@@ -17,14 +17,11 @@ import theme from "../../config/theme";
 import Logo from "../Logo";
 import Button from "../../components/Button";
 import AuthMenu from "./AuthMenu";
+import AuthMenuMobile from "./AuthMenuMobile";
 
-import {
-  getUserDetails,
-  removeUserDetails,
-} from "../../store/common/User/actions";
+import { getUserDetails } from "../../store/common/User/actions";
 
 import { ThemeProvider } from "@mui/material/styles";
-import AuthMenuMobile from "./AuthMenuMobile";
 
 const pages = [
   "home",
@@ -36,9 +33,11 @@ const pages = [
   // "login",
 ];
 
-function Header(props) {
-  console.log(props);
+function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null);
+
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -49,8 +48,8 @@ function Header(props) {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("authToken") && !props?.user?.data) {
-      props.getUserDetails();
+    if (localStorage.getItem("authToken") && !user?.data) {
+      dispatch(getUserDetails());
     }
   }, []);
 
@@ -115,11 +114,7 @@ function Header(props) {
                 ))}
               </Box>
               <Box sx={{ display: { xs: "none", md: "flex" }, pl: 2 }}>
-                <AuthMenu
-                  user={props.user.data}
-                  isLoading={props?.user?.loading}
-                  logout={props.removeUserDetails}
-                />
+                <AuthMenu />
               </Box>
             </Toolbar>
           </Container>
@@ -129,20 +124,4 @@ function Header(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      getUserDetails: getUserDetails,
-      removeUserDetails: removeUserDetails,
-    },
-    dispatch
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;
