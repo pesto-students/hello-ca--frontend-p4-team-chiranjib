@@ -40,6 +40,16 @@ export const put = (url, params = {}, data, headers = {}) => {
   });
 };
 
+export const patch = (url, params = {}, data, headers = {}) => {
+  if (Object.keys(params).length > 0)
+    url += `?${new URLSearchParams(params).toString()}`;
+  let authToken = localStorage.getItem("authToken");
+  if (authToken) headers.Authorization = `Bearer ${authToken}`;
+  return instance.patch(url, data, {
+    headers,
+  });
+};
+
 export const deleteMethod = (url, params = {}, data, headers = {}) => {
   if (Object.keys(params).length > 0)
     url += `?${new URLSearchParams(params).toString()}`;
