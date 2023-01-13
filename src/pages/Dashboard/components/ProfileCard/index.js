@@ -1,14 +1,14 @@
 import React from "react";
 import { Avatar, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Button from "../../../../components/Button";
 
 import theme from "../../../../config/theme";
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
 
 const ProfileCard = (props) => {
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   return (
@@ -24,31 +24,40 @@ const ProfileCard = (props) => {
       justifyContent="center"
     >
       <Avatar alt="Remy Sharp" sx={{ width: 125, height: 125, margin: "auto" }}>
-        {props?.user?.data?.first_name &&
-          props?.user?.data?.first_name[0].toLocaleUpperCase()}
-        {props?.user?.data?.last_name &&
-          props?.user?.data?.last_name[0].toLocaleUpperCase()}
+        {user?.data?.first_name &&
+          user?.data?.first_name[0].toLocaleUpperCase()}
+        {user?.data?.last_name && user?.data?.last_name[0].toLocaleUpperCase()}
       </Avatar>
 
       <Typography component="p" fontSize={13} sx={{ mt: 3, color: "gray" }}>
-        <b>Name :</b> {props?.user?.data?.first_name}{" "}
-        {props?.user?.data?.last_name}
+        <b>Name :</b> {user?.data?.first_name} {user?.data?.last_name}
       </Typography>
 
       <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
-        <b>Mobile :</b> {props?.user?.data?.country_code}{" "}
-        {props?.user?.data?.mobile}
+        <b>Mobile :</b> {user?.data?.country_code} {user?.data?.mobile}
       </Typography>
 
-      <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
-        <b>Last Login :</b> {props?.user?.data?.last_login}
-      </Typography>
+      {user?.data?.user_type === "USER" ? (
+        <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
+          <b>Last Login :</b> {props?.user?.data?.last_login}
+        </Typography>
+      ) : user?.data?.user_type === "CA" ? (
+        <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
+          <b>CA Reg.No :</b> {user?.data?.member_registration_number}
+        </Typography>
+      ) : null}
 
-      <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
-        <b>Last Payment Done :</b>{" "}
-        {props?.user?.data?.last_payment &&
-          `₹ ${props?.user?.data?.last_payment}`}
-      </Typography>
+      {user?.data?.user_type === "USER" ? (
+        <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
+          <b>Last Payment Done :</b>{" "}
+          {user?.data?.last_payment && `₹ ${user?.data?.last_payment}`}
+        </Typography>
+      ) : user?.data?.user_type === "CA" ? (
+        <Typography component="p" fontSize={13} sx={{ mt: 1, color: "gray" }}>
+          <b>Last Payout Done :</b>{" "}
+          {user?.data?.last_payout && `₹ ${user?.data?.last_payout}`}
+        </Typography>
+      ) : null}
 
       <Button
         className="add-talktime-btn"
@@ -61,19 +70,4 @@ const ProfileCard = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {
-      // getUserDetails: getUserDetails,
-    },
-    dispatch
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileCard);
+export default ProfileCard;
