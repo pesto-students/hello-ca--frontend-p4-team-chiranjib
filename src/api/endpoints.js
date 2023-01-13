@@ -4,6 +4,7 @@ const endpoints = {
   GENERATE_OTP_FOR_LOGIN: "/auth/login",
   GENERATE_OTP_FOR_REGISTER: "/auth/register",
   VERIFY_OTP: "/auth/verifyOtp",
+  UPDATE_USER_ONLINE_STATUS: "/auth/user/updateOnlineStatus",
 };
 
 export default endpoints;

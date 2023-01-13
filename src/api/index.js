@@ -1,4 +1,4 @@
-import { get, post } from "./config";
+import { get, patch, post } from "./config";
 import endpoints from "./endpoints";
 
 export const getTopics = (params) => {
@@ -19,4 +19,8 @@ export const verifyOtp = (data) => {
 
 export const getUserDetails = () => {
   return get(endpoints.GET_USER_DETAILS);
+};
+
+export const updateUserOnlineStatus = (data) => {
+  return patch(endpoints.UPDATE_USER_ONLINE_STATUS, {}, data);
 };

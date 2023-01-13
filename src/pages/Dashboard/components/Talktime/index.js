@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import "./style.scss";
 import { Paper, Typography } from "@mui/material";
@@ -7,10 +7,15 @@ import Button from "../../../../components/Button";
 import Switch from "../../../../components/Switch";
 
 import { post } from "../../../../api/config";
+import { updateUserOnlineStatus } from "../../../../api";
 
 const Talktime = () => {
   const user = useSelector((state) => state.user);
   const [status, setStatus] = useState(false);
+
+  useEffect(() => {
+    if (user?.data) setStatus(user?.data?.is_online);
+  }, [user?.data]);
 
   function loadScript(src) {
     return new Promise((resolve) => {
@@ -82,8 +87,9 @@ const Talktime = () => {
     paymentObject.open();
   }
 
-  const handleStatusChange = (event) => {
+  const handleStatusChange = async (event) => {
     setStatus(event.target.checked); //  true means online, false means offline.
+    await updateUserOnlineStatus({ is_online: event.target.checked });
   };
 
   return (
