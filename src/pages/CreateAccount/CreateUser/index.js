@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -142,6 +143,12 @@ const CreateUser = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (user?.data) {
+      navigate("/dashboard");
+    }
+  }, [user]);
 
   return (
     <div className="create-user-container">

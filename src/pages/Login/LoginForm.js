@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import qs from "qs";
@@ -120,6 +121,12 @@ const LoginForm = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (user?.data) {
+      navigate("/dashboard");
+    }
+  }, [user]);
 
   return (
     <div className="login-form-container">
