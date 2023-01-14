@@ -1,0 +1,9 @@
+.modal-container {
+  position: relative;
+  .close-icons {
+    z-index: 10;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
