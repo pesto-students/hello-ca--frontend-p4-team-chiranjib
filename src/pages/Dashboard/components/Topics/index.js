@@ -7,6 +7,8 @@ import InfoIcon from "@mui/icons-material/Info";
 
 import TopicsLoader from "./TopicsLoader";
 import Button from "../../../../components/Button";
+import Modal from "../../../../components/Modal";
+import CallModal from "../CallModal";
 
 import "./style.scss";
 
@@ -20,6 +22,8 @@ const Topics = () => {
     handleTopicsSelection,
     startCall,
     updateSpecilizaions,
+    showCallConnectedModal,
+    closeCallModal,
   } = useTopics();
 
   const user = useSelector((state) => state.user);
@@ -63,14 +67,24 @@ const Topics = () => {
               disabled={selectedTopics === user?.data?.specialization}
             />
             <Typography className="ca-info-text">
-              <InfoIcon className="ca-info-icons"fontSize="sm" />
+              <InfoIcon className="ca-info-icons" fontSize="sm" />
               You will get calls based on your specialization selection
             </Typography>
           </>
         ) : null}
       </Grid>
 
-      <Grid xs={12} md={5}>{/* Image */}</Grid>
+      <Grid xs={12} md={5}>
+        {/* Image */}
+      </Grid>
+
+      <Modal
+        open={showCallConnectedModal}
+        handleClose={closeCallModal}
+        showCloseBtn
+      >
+        <CallModal handleClose={closeCallModal} />
+      </Modal>
     </Grid>
   );
 };

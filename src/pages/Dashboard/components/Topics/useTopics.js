@@ -6,6 +6,7 @@ const useTopics = () => {
   const [topics, setTopics] = useState(null);
   const [isTopicsLoading, setIsTopicsLoading] = useState(false);
   const [selectedTopics, setSelectedTopics] = useState([]);
+  const [showCallConnectedModal, setCallConnectedModal] = useState(false);
 
   const user = useSelector((state) => state.user);
 
@@ -37,6 +38,11 @@ const useTopics = () => {
   const startCall = () => {
     //  start call.
     console.log(selectedTopics);
+    setCallConnectedModal(true);
+  };
+
+  const closeCallModal = () => {
+    setCallConnectedModal(false);
   };
 
   const updateSpecilizaions = () => {
@@ -61,7 +67,9 @@ const useTopics = () => {
     selectedTopics,
     handleTopicsSelection,
     startCall,
-    updateSpecilizaions
+    updateSpecilizaions,
+    showCallConnectedModal,
+    closeCallModal,
   };
 };
 

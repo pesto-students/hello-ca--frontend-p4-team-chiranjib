@@ -1,0 +1,22 @@
+.timer-container {
+  border: 2px solid #e1f0fb;
+  border-radius: 25px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .timer-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    .timer {
+      font-size: 42px;
+    }
+    .min-txt {
+      margin-bottom: 10px;
+    }
+  }
+  .min-remaining-txt {
+    margin-bottom: 0px;
+  }
+}
