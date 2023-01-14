@@ -4,6 +4,7 @@ import Timer from "../Timer";
 import Button from "../../../../components/Button";
 
 import "./style.scss";
+import LoaderDots from "../../../../components/Loader/LoaderDots";
 
 const CallModal = ({ handleClose }) => {
   return (
@@ -11,7 +12,7 @@ const CallModal = ({ handleClose }) => {
       <div className="call-modal-header">Call in Progress</div>
       <div className="call-modal-content">
         <p className="find-ca-text">Finding expert CA to answer your query</p>
-        {/* <LoaderDots /> */}
+        <LoaderDots className="loader-dots"/>
         <ul>
           <li>Check your phone</li>
           <li>Answer call</li>
