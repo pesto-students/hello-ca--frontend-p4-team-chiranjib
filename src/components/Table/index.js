@@ -5,6 +5,7 @@
  * <Table
  *      columns={[{label: "col1", accessor: "key1 from data", component: (props) => {...}}]}        //  props contains current col and row.
  *      data={[{name: "ABCD", key: "value"}]}
+ *      isLoading={true}
  * />
  *
  */
@@ -12,9 +13,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import InlineLoader from "../Loader/InlineLoader";
+
 import "./style.scss";
 
-const Table = ({ columns = [], data = [] }) => {
+const Table = ({ columns = [], data = [], isLoading = false }) => {
   return (
     <table className="table" border="0" cellspacing="0">
       <thead>
@@ -25,9 +28,15 @@ const Table = ({ columns = [], data = [] }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.length === 0 ? (
+        {isLoading ? (
           <tr>
-            <td>No data...</td>
+            <td colSpan={columns.length}>
+              <InlineLoader color={"#004aad"} width={"50px"} height={"50px"} />
+            </td>
+          </tr>
+        ) : data?.length === 0 ? (
+          <tr>
+            <td colSpan={columns.length}>No data...</td>
           </tr>
         ) : (
           data?.map((row, rowIdx) => (
