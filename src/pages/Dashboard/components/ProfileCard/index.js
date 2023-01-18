@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Button from "../../../../components/Button";
+import Modal from "../../../../components/Modal";
+
+import UpdateProfileModal from "../UpdateProfileModal";
 
 import theme from "../../../../config/theme";
 
 const ProfileCard = (props) => {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const [showUpdateProfileModal, setUpdateProfileModal] = useState(false);
+
+  const openUpdateProfileModal = () => {
+    setUpdateProfileModal(true);
+  };
+
+  const closeUpdateProfileModal = () => {
+    setUpdateProfileModal(false);
+  };
 
   return (
     <Paper
@@ -64,8 +76,16 @@ const ProfileCard = (props) => {
         label={"Update Profile"}
         variant={"primary"}
         fullWidth
-        onClick={() => navigate("/profile")}
+        onClick={openUpdateProfileModal}
       />
+
+      <Modal
+        open={showUpdateProfileModal}
+        handleClose={closeUpdateProfileModal}
+        showCloseBtn
+      >
+        <UpdateProfileModal handleClose={closeUpdateProfileModal} />
+      </Modal>
     </Paper>
   );
 };
