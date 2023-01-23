@@ -51,6 +51,14 @@ const LoginForm = () => {
         }
         break;
 
+      case "otp":
+        if (fieldValue) {
+          error = "";
+        } else {
+          error = "Inavlid OTP";
+        }
+        break;
+
       default:
         break;
     }
@@ -70,8 +78,32 @@ const LoginForm = () => {
     });
   };
 
-  const handleLogin = async (event) => {
+  const validate = async (event) => {
     event?.preventDefault();
+    const requiredFields = ["mobileNumber"];
+
+    if (isOTPEnabled) requiredFields.push("otp");
+
+    let newErrors = { ...errors };
+
+    await requiredFields.map((fieldName) => {
+      if (!formFields[fieldName]) {
+        newErrors[fieldName] = "Required!";
+      }
+      return null;
+    });
+
+    await setErrors(newErrors);
+
+    const hasData = requiredFields.map((fieldName) => formFields[fieldName]);
+    const hasError = requiredFields.some((fieldName) => newErrors[fieldName]);
+
+    if (hasData && !hasError) {
+      handleLogin();
+    }
+  };
+
+  const handleLogin = async () => {
     setIsLoading(true);
     if (!isOTPEnabled) {
       try {
@@ -151,6 +183,7 @@ const LoginForm = () => {
         <Input
           label="Mobile Number"
           name="mobileNumber"
+          type="number"
           className="input-field-wrapper"
           placeholder="Please enter Mobile number"
           onChange={handleChange}
@@ -162,6 +195,7 @@ const LoginForm = () => {
           <Input
             label="OTP"
             name="otp"
+            type="number"
             className="input-field-wrapper"
             placeholder="Please enter OTP"
             onChange={handleChange}
@@ -175,7 +209,7 @@ const LoginForm = () => {
           <Button
             label={!isOTPEnabled ? "Generate OTP" : "Login"}
             type="submit"
-            onClick={handleLogin}
+            onClick={validate}
           />
         </div>
 
