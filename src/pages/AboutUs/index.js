@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import Layout from "../../components/Layout";
+import Button from "../../components/Button"
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 
 import "./style.scss";
 
@@ -64,9 +65,9 @@ const AboutUs = () => {
               alignItems: "center",
             }}
           >
-            <Button type="submit" variant="contained" size="large">
-              CONTACT US
-            </Button>
+            <Link to="/contact-us">
+            <Button label="CONTACT US" variant="primary" />
+            </Link>
           </Box>
         </Grid>
       </Grid>

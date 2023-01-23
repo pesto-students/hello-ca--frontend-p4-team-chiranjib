@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -82,12 +82,12 @@ const ContactUs = () => {
           </Stack>
 
           <Stack direction="row" spacing={2}>
-            <Link href="#">Home</Link>
-            <Link href="#">Services</Link>
-            <Link href="#">Our Process</Link>
-            <Link href="#">About Us</Link>
-            <Link href="#">FAQ</Link>
-            <Link href="#">Login</Link>
+            <Link to="/">Home</Link>
+            <Link to="/services">Services</Link>
+            <Link to="/out-process">Our Process</Link>
+            <Link to="/about-us">About Us</Link>
+            <Link to="/faq">FAQ</Link>
+            <Link to="/login">Login</Link>
           </Stack>
         </Grid>
       </Grid>
