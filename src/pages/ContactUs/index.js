@@ -84,7 +84,7 @@ const ContactUs = () => {
           <Stack direction="row" spacing={2}>
             <Link to="/">Home</Link>
             <Link to="/services">Services</Link>
-            <Link to="/out-process">Our Process</Link>
+            <Link to="/our-process">Our Process</Link>
             <Link to="/about-us">About Us</Link>
             <Link to="/faq">FAQ</Link>
             <Link to="/login">Login</Link>
