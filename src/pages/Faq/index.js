@@ -13,12 +13,23 @@ import Layout from "../../components/Layout";
 import theme from "../../config/theme";
 
 import "./style.scss";
+import { faqs } from "../../utils/constants/faq";
 
 const Faq = () => {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expandedIndex, setExpandedIndex] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+    setExpandedIndex(isExpanded ? panel : false);
+  };
+
+  const getList = (list) => {
+    return (
+      <ul>
+        {list?.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    );
   };
 
   return (
@@ -50,126 +61,29 @@ const Faq = () => {
             FAQ
           </Typography>
 
-          <Accordion
-            expanded={expanded === "panel1"}
-            onChange={handleChange("panel1")}
-            elevation={0}
-            sx={{ mb: 2 }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1bh-content"
-              id="panel1bh-header"
+          {faqs?.map((faq, index) => (
+            <Accordion
+              expanded={expandedIndex === index}
+              onChange={handleChange(index)}
+              elevation={0}
+              sx={{ mb: 2 }}
             >
-              <Typography sx={{ width: "100%", flexShrink: 0 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ?
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                quis ipsum at ipsum hendrerit finibus nec a nulla. Curabitur eu
-                lacus sed felis blandit pharetra id non ex. Sed quis hendrerit
-                magna. Mauris malesuada tortor arcu. Quisque vitae dictum ex.
-                Curabitur a est et velit finibus pellentesque. Praesent
-                facilisis vel lacus sed sodales. Morbi venenatis enim vitae
-                porttitor aliquet. Maecenas vel velit neque. Phasellus eu
-                convallis nisl, ac malesuada elit. Mauris et ullamcorper neque.
-                Nunc laoreet nibh a libero finibus tempus. Ut a ligula
-                tristique, rhoncus urna ut, condimentum leo.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            expanded={expanded === "panel2"}
-            onChange={handleChange("panel2")}
-            elevation={0}
-            sx={{ mb: 2 }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2bh-content"
-              id="panel2bh-header"
-            >
-              <Typography sx={{ width: "100%", flexShrink: 0 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ?
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                quis ipsum at ipsum hendrerit finibus nec a nulla. Curabitur eu
-                lacus sed felis blandit pharetra id non ex. Sed quis hendrerit
-                magna. Mauris malesuada tortor arcu. Quisque vitae dictum ex.
-                Curabitur a est et velit finibus pellentesque. Praesent
-                facilisis vel lacus sed sodales. Morbi venenatis enim vitae
-                porttitor aliquet. Maecenas vel velit neque. Phasellus eu
-                convallis nisl, ac malesuada elit. Mauris et ullamcorper neque.
-                Nunc laoreet nibh a libero finibus tempus. Ut a ligula
-                tristique, rhoncus urna ut, condimentum leo.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            expanded={expanded === "panel3"}
-            onChange={handleChange("panel3")}
-            elevation={0}
-            sx={{ mb: 2 }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel3bh-content"
-              id="panel3bh-header"
-            >
-              <Typography sx={{ width: "100%", flexShrink: 0 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ?
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                quis ipsum at ipsum hendrerit finibus nec a nulla. Curabitur eu
-                lacus sed felis blandit pharetra id non ex. Sed quis hendrerit
-                magna. Mauris malesuada tortor arcu. Quisque vitae dictum ex.
-                Curabitur a est et velit finibus pellentesque. Praesent
-                facilisis vel lacus sed sodales. Morbi venenatis enim vitae
-                porttitor aliquet. Maecenas vel velit neque. Phasellus eu
-                convallis nisl, ac malesuada elit. Mauris et ullamcorper neque.
-                Nunc laoreet nibh a libero finibus tempus. Ut a ligula
-                tristique, rhoncus urna ut, condimentum leo.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion
-            expanded={expanded === "panel4"}
-            onChange={handleChange("panel4")}
-            elevation={0}
-            sx={{ mb: 2 }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel4bh-content"
-              id="panel4bh-header"
-            >
-              <Typography sx={{ width: "100%", flexShrink: 0 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit ?{" "}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                quis ipsum at ipsum hendrerit finibus nec a nulla. Curabitur eu
-                lacus sed felis blandit pharetra id non ex. Sed quis hendrerit
-                magna. Mauris malesuada tortor arcu. Quisque vitae dictum ex.
-                Curabitur a est et velit finibus pellentesque. Praesent
-                facilisis vel lacus sed sodales. Morbi venenatis enim vitae
-                porttitor aliquet. Maecenas vel velit neque. Phasellus eu
-                convallis nisl, ac malesuada elit. Mauris et ullamcorper neque.
-                Nunc laoreet nibh a libero finibus tempus. Ut a ligula
-                tristique, rhoncus urna ut, condimentum leo.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+              >
+                <Typography sx={{ width: "100%", flexShrink: 0 }}>
+                  {faq.question}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  {Array.isArray(faq.answer) ? getList(faq.answer) : faq.answer}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
         </Grid>
       </Grid>
     </Layout>
