@@ -8,3 +8,12 @@ export default siteSettings;
 export const LOCAL_STORAGE = {
   AUTH_TOKEN: "authToken",
 };
+
+export const serviceList = [
+  "Direct Taxation",
+  "Company Reg.",
+  "GST",
+  "Tax Planning",
+  "Start Up",
+  "Compliance / Audit",
+];

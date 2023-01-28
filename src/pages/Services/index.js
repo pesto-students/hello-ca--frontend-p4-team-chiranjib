@@ -2,25 +2,20 @@ import React, { useEffect } from "react";
 
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import Layout from "../../components/Layout";
 
-import theme from "../../config/theme";
-
 import "./style.scss";
 
+import useUI from "../../hooks/useUI.hook";
+
+import CallIllustration from "../../assets/img/call-illustration-bg.png";
+import { serviceList } from "../../utils/constants/siteSettings";
+
 const Services = () => {
-  const serviceList = [
-    "Direct Taxation",
-    "Company Reg.",
-    "GST",
-    "Tax Planning",
-    "Start Up",
-    "Compliance / Audit",
-  ];
+  const { getStarted } = useUI();
 
   useEffect(() => {
     document.title = "Services | Hello CA";
@@ -44,54 +39,43 @@ const Services = () => {
             </Typography>
           </Box>
 
-          <Grid container component="section">
-            {serviceList.map((service) => (
-              <Grid
-                item
-                component="article"
-                align="center"
+          <Grid container alignItems="center">
+            <Grid item xs={12} md={6}>
+              <img
+                src={CallIllustration}
+                alt="call-illustration-bg"
+                style={{ width: "100%" }}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <ul>
+                {serviceList?.map((service) => (
+                  <li>{service}</li>
+                ))}
+              </ul>
+
+              <Box
                 xs={12}
-                md={4}
+                // align="center"
                 sx={{
-                  p: 3,
+                  width: "100%",
+                  mt: 3,
+                  mb: 3,
+                  ml: 3,
                 }}
               >
-                <Paper
-                  variant="outlined"
-                  sx={{
-                    p: 4,
-                    backgroundColor: "#fff",
-                    border: "1px solid",
-                    borderColor: theme.palette.primary.main,
-                  }}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  onClick={getStarted}
                 >
-                  <Typography
-                    component="h6"
-                    variant="h6"
-                    sx={{
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {service}
-                  </Typography>
-                </Paper>
-              </Grid>
-            ))}
+                  Get Started
+                </Button>
+              </Box>
+            </Grid>
           </Grid>
-
-          <Box
-            xs={12}
-            align="center"
-            sx={{
-              width: "100%",
-              mt: 3,
-              mb: 3,
-            }}
-          >
-            <Button type="submit" variant="contained" size="large">
-              Get Started
-            </Button>
-          </Box>
         </Grid>
       </Grid>
     </Layout>
