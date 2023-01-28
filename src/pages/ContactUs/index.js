@@ -21,7 +21,11 @@ import logoImg from "../../assets/img/hello-ca-logo.svg";
 
 import "./style.scss";
 
+import useUI from "../../hooks/useUI.hook";
+
 const ContactUs = () => {
+  const { getStarted } = useUI();
+
   useEffect(() => {
     document.title = "Contact Us | Hello CA";
   }, []);
@@ -58,7 +62,12 @@ const ContactUs = () => {
             All your queries are just a call away.
           </Typography>
 
-          <Button type="submit" variant="contained" size="large">
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            onClick={getStarted}
+          >
             Get Started
           </Button>
 

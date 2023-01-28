@@ -4,3 +4,7 @@ const siteSettings = {
 };
 
 export default siteSettings;
+
+export const LOCAL_STORAGE = {
+  AUTH_TOKEN: "authToken",
+};
