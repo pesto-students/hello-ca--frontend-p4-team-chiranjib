@@ -6,12 +6,18 @@ import { Paper, Typography } from "@mui/material";
 import Button from "../../../../components/Button";
 import Switch from "../../../../components/Switch";
 
+import Modal from "../../../../components/Modal";
+
+import AddTalkTimeModal from "../AddTalkTimeModal";
+
 import { post } from "../../../../api/config";
 import { updateUserOnlineStatus } from "../../../../api";
+
 
 const Talktime = () => {
   const user = useSelector((state) => state.user);
   const [status, setStatus] = useState(false);
+  const [showAddTalkTimeModal, setAddTalkTimeModal] = useState(false);
 
   useEffect(() => {
     if (user?.data) setStatus(user?.data?.is_online);
@@ -87,6 +93,14 @@ const Talktime = () => {
     paymentObject.open();
   }
 
+  const startPayment = () => {
+    setAddTalkTimeModal(true);
+  };
+
+  const closeAddTalkTimeModal = () => {
+    setAddTalkTimeModal(false);
+  };
+
   const handleStatusChange = async (event) => {
     setStatus(event.target.checked); //  true means online, false means offline.
     await updateUserOnlineStatus({ is_online: event.target.checked });
@@ -124,7 +138,7 @@ const Talktime = () => {
             label={"Add Talk Time"}
             variant={"secondary"}
             fullWidth
-            onClick={displayRazorpay}
+            onClick={startPayment}
           />
         </>
       ) : user?.data?.user_type === "CA" ? (
@@ -146,6 +160,14 @@ const Talktime = () => {
           </Typography>
         </>
       ) : null}
+
+      <Modal
+        open={showAddTalkTimeModal}
+        handleClose={closeAddTalkTimeModal}
+        showCloseBtn
+      >
+        <AddTalkTimeModal handleClose={closeAddTalkTimeModal} />
+      </Modal>
     </Paper>
   );
 };
