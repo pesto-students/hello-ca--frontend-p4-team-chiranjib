@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getTopics } from "../../../../api";
@@ -18,7 +19,7 @@ const useTopics = () => {
 
       setIsTopicsLoading(false);
       if (response?.data?.status === 200) {
-        setTopics(response?.data?.topics);
+        setTopics(response?.data?.topics || {});
       }
     } catch (error) {
       console.log(error);
@@ -55,11 +56,19 @@ const useTopics = () => {
   }, []);
 
   useEffect(() => {
-    if (user?.data) {
-      //    Setting default specilizations
-      setSelectedTopics(user?.data?.specialization);
+    if (user?.data && topics) {
+      let specialization = [];
+      if (user?.data?.user_type === "CA") {
+        //    Setting default specilizations
+        specialization = user?.data?.specialization;
+      } else {
+        //    Setting default first topic as selected Topic
+        const topicsKeys = Object.keys(topics || {});
+        specialization = [topicsKeys[0]];
+      }
+      setSelectedTopics(specialization);
     }
-  }, [user?.data]);
+  }, [user?.data, topics]);
 
   return {
     isTopicsLoading,
