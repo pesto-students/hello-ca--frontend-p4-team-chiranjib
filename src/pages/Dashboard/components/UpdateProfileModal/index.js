@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
-import Input from "../../../../components/Input";
-import Button from "../../../../components/Button";
-import "./style.scss";
+import React, { useEffect, useState } from "react";
+import Tabs from "../../../../components/Tabs";
 
+import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../../../store/common/User/actions";
+
+import PersonalUpdate from "./PersonalUpdate";
+import BankingUpdate from "./BankingUpdate";
 
 const UpdateProfileModal = ({ handleClose }) => {
 
   const user = useSelector((state) => state.user);
+  const [activeTab, setActiveTab] = useState("PERSONAL");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,32 +24,32 @@ const UpdateProfileModal = ({ handleClose }) => {
     <div className="call-modal-container">
       <div className="call-modal-header">Update Profile</div>
       <div className="call-modal-content">
-      <Input
-          label="First Name"
-          name="firstName"
-          className="input-field-wrapper"
-          placeholder="Enter your first name"
-          value={user?.data?.first_name}
-        />
-        <Input
-          label="Last Name"
-          name="lastName"
-          className="input-field-wrapper"
-          placeholder="Enter your last name"
-          value={user?.data?.last_name}
-        />
-        <Input
-          label="Mobile Number"
-          name="mobileNumber"
-          className="input-field-wrapper"
-          placeholder="Please enter Mobile number"
-          value={user?.data?.mobile}
-          disabled
-        />
-        <Button label="Update Profile" className="close-btn" />
+
+      {user.data.user_type === "CA" ? (
+        <div className="tabs-container">
+          <Tabs
+            tabs={[
+              {
+                label: "Personal",
+                slug: "PERSONAL",
+              },
+              {
+                label: "Banking",
+                slug: "BANKING",
+              },
+            ]}
+            activeTab={activeTab}
+            handleTabChange={(tab) => setActiveTab(tab.slug)}
+            type="button-group"
+          />
+        </div>
+      ) : null}
+      
+      {activeTab === "PERSONAL" ? <PersonalUpdate /> : <BankingUpdate />}
+         
       </div>
     </div>
   );
 };
 
-export default UpdateProfileModal;
+export default UpdateProfileModal; 

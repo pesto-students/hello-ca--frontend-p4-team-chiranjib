@@ -21,6 +21,10 @@ export const getUserDetails = () => {
   return get(endpoints.GET_USER_DETAILS);
 };
 
+export const updateUserDetails  = (data, headers) => {
+  return post(endpoints.UPDATE_USER_DETAILS, {}, data, headers);
+};
+
 export const updateUserOnlineStatus = (data) => {
   return patch(endpoints.UPDATE_USER_ONLINE_STATUS, {}, data);
 };
