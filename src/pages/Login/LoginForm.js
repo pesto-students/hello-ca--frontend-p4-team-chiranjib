@@ -47,7 +47,7 @@ const LoginForm = () => {
         if (fieldValue && mobileRegex.test(fieldValue)) {
           error = "";
         } else {
-          error = "Inavlid Mobile Numner";
+          error = "Inavlid Mobile Number";
         }
         break;
 
