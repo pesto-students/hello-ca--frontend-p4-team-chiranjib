@@ -1,16 +1,21 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import qs from "qs";
+
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 
-import { useSelector } from "react-redux";
-import {updateUserDetails} from "../../../../api";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails } from "../../../../store/common/User/actions";
+import { updateUserDetails } from "../../../../api";
 
-const PersonalUpdate = () => {
+import "./style.scss";
 
+const PersonalUpdate = ({ handleClose }) => {
   const user = useSelector((state) => state.user);
-  const [showUpdateProfileModal, setUpdateProfileModal] = useState(true);
+  const dispatch = useDispatch();
+
   const [responseError, setResponseError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [formFields, setFormFields] = useState({
     firstName: user?.data?.first_name,
     lastName: user?.data?.last_name,
@@ -33,14 +38,18 @@ const PersonalUpdate = () => {
         if (fieldValue) {
           error = "";
         } else {
-          error = "First name can not be empty";
+          error = "Required!";
         }
+        break;
+
       case "lastName":
         if (fieldValue) {
           error = "";
         } else {
-          error = "Last name can not be empty";
+          error = "Required!";
         }
+        break;
+
       default:
         break;
     }
@@ -56,33 +65,35 @@ const PersonalUpdate = () => {
       ...errors,
       [fieldName]: error,
     });
-
   };
 
   const handleUpdate = async (event) => {
     event.preventDefault();
-    
+
     const data = qs.stringify({
-      first_name  : formFields.firstName,
-      last_name   : formFields.lastName,
+      first_name: formFields.firstName,
+      last_name: formFields.lastName,
     });
 
     const headers = {
       "content-type": "application/x-www-form-urlencoded",
     };
 
+    setIsLoading(true);
     const response = await updateUserDetails(data, headers);
-    
+
     if (response && response?.data?.status === 200) {
-      setUpdateProfileModal(false);
+      dispatch(getUserDetails());
+      setIsLoading(false);
+      handleClose(false);
     } else {
       console.log(response?.data?.error);
+      setIsLoading(false);
     }
-    
   };
 
   return (
-    <form>
+    <form className="update-personal-details-form">
       <Input
         label="First Name"
         name="firstName"
@@ -114,8 +125,11 @@ const PersonalUpdate = () => {
         label="Update"
         className="button primary btn"
         type="submit"
+        fullWidth
         onClick={handleUpdate}
-        />
+        isLoading={isLoading}
+        disabled={isLoading}
+      />
     </form>
   );
 };
