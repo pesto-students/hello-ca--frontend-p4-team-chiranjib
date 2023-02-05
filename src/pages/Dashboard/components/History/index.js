@@ -19,6 +19,15 @@ const History = () => {
           {
             label: "Date/Time",
             accessor: "createdAt",
+            component: (props) => (
+              <p
+                style={{
+                  margin: "0px",
+                }}
+              >
+                {formatDateAndTime(props?.row?.createdAt)}
+              </p>
+            ),
           },
           {
             label: "Duration",
@@ -85,6 +94,15 @@ const History = () => {
           {
             label: "Date/Time",
             accessor: "createdAt",
+            component: (props) => (
+              <p
+                style={{
+                  margin: "0px",
+                }}
+              >
+                {formatDateAndTime(props?.row?.createdAt)}
+              </p>
+            ),
           },
           {
             label: "Amount Paid",
