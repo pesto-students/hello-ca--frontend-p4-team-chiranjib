@@ -7,6 +7,10 @@
   color: #004aad;
   border: none;
   border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .button.primary {
@@ -27,4 +31,5 @@
   background-color: white;
   color: #999;
   cursor: not-allowed;
+  border: 1px solid #999;
 }

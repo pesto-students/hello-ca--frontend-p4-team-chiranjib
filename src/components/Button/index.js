@@ -16,6 +16,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import "./style.scss";
+import InlineLoader from "../Loader/InlineLoader";
 
 const Button = ({
   label,
@@ -23,8 +24,9 @@ const Button = ({
   variant,
   className,
   onClick,
-  disabled,
+  disabled = false,
   fullWidth,
+  isLoading = false,
 }) => {
   return (
     <button
@@ -35,6 +37,9 @@ const Button = ({
       onClick={onClick}
     >
       {label}
+      {isLoading && (
+        <InlineLoader width={"20px"} height={"20px"} color={"#ccc"} />
+      )}
     </button>
   );
 };
