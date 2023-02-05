@@ -7,11 +7,15 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
+import useUI from "../../hooks/useUI.hook";
+
 import displayImg from "../../assets/img/girl-hero-bg.png";
 
 import "./style.scss";
 
 const Home = () => {
+  const { getStarted } = useUI();
+
   useEffect(() => {
     document.title = "Hello CA - CA Just Call Away";
   }, []);
@@ -48,6 +52,7 @@ const Home = () => {
               variant="contained"
               size="large"
               sx={{ fontSize: 20, padding: "10px 50px" }}
+              onClick={getStarted}
             >
               GET STARTED
             </Button>

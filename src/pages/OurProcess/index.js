@@ -11,7 +11,11 @@ import ourProcessImage from "../../assets/img/our-process.png";
 
 import "./style.scss";
 
+import useUI from "../../hooks/useUI.hook";
+
 const OurProcess = () => {
+  const { getStarted } = useUI();
+
   useEffect(() => {
     document.title = "Our Process | Hello CA";
   }, []);
@@ -69,7 +73,12 @@ const OurProcess = () => {
           alignItems: "center",
         }}
       >
-        <Button type="submit" variant="contained" size="large">
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          onClick={getStarted}
+        >
           Get Started
         </Button>
       </Box>

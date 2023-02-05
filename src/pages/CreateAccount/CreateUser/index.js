@@ -69,6 +69,14 @@ const CreateUser = () => {
         }
         break;
 
+      case "otp":
+        if (fieldValue) {
+          error = "";
+        } else {
+          error = "Inavlid OTP";
+        }
+        break;
+
       default:
         break;
     }
@@ -88,8 +96,32 @@ const CreateUser = () => {
     });
   };
 
-  const handleLogin = async (event) => {
+  const validate = async (event) => {
     event?.preventDefault();
+    const requiredFields = ["firstName", "lastName", "mobileNumber"];
+
+    if (isOTPEnabled) requiredFields.push("otp");
+
+    let newErrors = { ...errors };
+
+    await requiredFields.map((fieldName) => {
+      if (!formFields[fieldName]) {
+        newErrors[fieldName] = "Required!";
+      }
+      return null;
+    });
+
+    await setErrors(newErrors);
+
+    const hasData = requiredFields.map((fieldName) => formFields[fieldName]);
+    const hasError = requiredFields.some((fieldName) => newErrors[fieldName]);
+
+    if (hasData && !hasError) {
+      handleLogin();
+    }
+  };
+
+  const handleLogin = async () => {
     setIsLoading(true);
     if (!isOTPEnabled) {
       try {
@@ -183,6 +215,7 @@ const CreateUser = () => {
         <Input
           label="Mobile Number"
           name="mobileNumber"
+          type="number"
           className="input-field-wrapper"
           placeholder="Please enter Mobile Number"
           onChange={handleChange}
@@ -194,6 +227,7 @@ const CreateUser = () => {
           <Input
             label="OTP"
             name="otp"
+            type="number"
             className="input-field-wrapper"
             placeholder="Please enter OTP"
             onChange={handleChange}
@@ -207,7 +241,7 @@ const CreateUser = () => {
           <Button
             label={!isOTPEnabled ? "Generate OTP" : "Create Account"}
             type="submit"
-            onClick={handleLogin}
+            onClick={validate}
           />
         </div>
 

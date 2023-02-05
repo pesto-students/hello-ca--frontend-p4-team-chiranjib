@@ -28,3 +28,11 @@ export const updateUserDetails  = (data, headers) => {
 export const updateUserOnlineStatus = (data) => {
   return patch(endpoints.UPDATE_USER_ONLINE_STATUS, {}, data);
 };
+
+export const getUserPaymentHistory = () => {
+  return get(endpoints.GET_USER_PAYMENT_HISTORY);
+};
+
+export const getCAPaymentOutHistory = () => {
+  return get(endpoints.GET_CA_PAYMENT_OUT_HISTORY);
+};
