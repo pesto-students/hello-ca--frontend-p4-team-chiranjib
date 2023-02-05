@@ -5,6 +5,8 @@ import Table from "../../../../components/Table";
 
 import useHistoryHook from "./useHistory.hook";
 
+import { formatDateAndTime } from "../../../../utils/helpers/time";
+
 import "./style.scss";
 
 const History = () => {
@@ -36,28 +38,44 @@ const History = () => {
           {
             label: "Date/Time",
             accessor: "createdAt",
-          },
-          {
-            label: "Total Amount",
-            accessor: "totalAmount",
-            component: (props) => <p>₹ {props?.row?.totalAmount}</p>,
-          },
-          {
-            label: "Mins",
-            accessor: "mins",
-          },
-          {
-            label: "Status",
-            accessor: "paymentStatus",
             component: (props) => (
               <p
                 style={{
-                  color:
-                    props?.row?.paymentStatus === "success" ? "green" : "red",
-                  margin: 0,
+                  margin: "0px",
                 }}
               >
-                {props?.row?.paymentStatus}
+                {formatDateAndTime(props?.row?.createdAt)}
+              </p>
+            ),
+          },
+          {
+            label: "Total Amount",
+            accessor: "amount",
+            component: (props) => (
+              <p
+                style={{
+                  margin: "0px",
+                }}
+              >
+                ₹ {props?.row?.amount}
+              </p>
+            ),
+          },
+          {
+            label: "Mins Purchased",
+            accessor: "minutes_purchased",
+          },
+          {
+            label: "Status",
+            accessor: "status_client",
+            component: (props) => (
+              <p
+                style={{
+                  color: props?.row?.status_client ? "green" : "red",
+                  margin: "0px",
+                }}
+              >
+                {props?.row?.status_client ? "Success" : "Failed"}
               </p>
             ),
           },
