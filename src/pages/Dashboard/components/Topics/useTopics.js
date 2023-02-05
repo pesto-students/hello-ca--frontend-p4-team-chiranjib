@@ -27,9 +27,9 @@ const useTopics = () => {
   };
 
   const handleTopicsSelection = (topic) => {
-    if (selectedTopics.includes(topic)) {
+    if (selectedTopics?.includes(topic)) {
       setSelectedTopics(
-        selectedTopics.filter((selectedTopic) => selectedTopic !== topic)
+        selectedTopics?.filter((selectedTopic) => selectedTopic !== topic)
       );
     } else {
       setSelectedTopics([...selectedTopics, topic]);

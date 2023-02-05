@@ -40,7 +40,7 @@ const Topics = () => {
               <Grid item xs={4}>
                 <div
                   className={`topic ${
-                    selectedTopics.includes(topic) ? "selected" : ""
+                    selectedTopics?.includes(topic) ? "selected" : ""
                   }`}
                   onClick={() => handleTopicsSelection(topic)}
                 >
