@@ -6,6 +6,7 @@ import Table from "../../../../components/Table";
 import useHistoryHook from "./useHistory.hook";
 
 import { formatDateAndTime } from "../../../../utils/helpers/time";
+import { capitalize } from "../../../../utils/helpers/common";
 
 import "./style.scss";
 
@@ -31,15 +32,21 @@ const History = () => {
           },
           {
             label: "Duration",
-            accessor: "duration",
+            accessor: "Legs",
+            component: (props) => props?.row?.Legs[0]?.OnCallDuration,
           },
           {
             label: "Topics",
-            accessor: "topics",
+            accessor: "Legs",
+            component: (props) =>
+              capitalize(props?.row?.Legs[0]?.CauseCode || ""),
           },
           {
             label: "Listen",
-            accessor: "audioTrack",
+            accessor: "RecordingUrl",
+            component: (props) => (
+              <audio src={props?.row?.RecordingUrl} controls />
+            ),
           },
         ]
       : activeTab === "RECHARGE_HISTORY"

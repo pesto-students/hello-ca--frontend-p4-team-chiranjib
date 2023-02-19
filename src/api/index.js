@@ -21,7 +21,7 @@ export const getUserDetails = () => {
   return get(endpoints.GET_USER_DETAILS);
 };
 
-export const updateUserDetails  = (data, headers) => {
+export const updateUserDetails = (data, headers) => {
   return put(endpoints.UPDATE_USER_DETAILS, {}, data, headers);
 };
 
@@ -35,4 +35,12 @@ export const getUserPaymentHistory = () => {
 
 export const getCAPaymentOutHistory = () => {
   return get(endpoints.GET_CA_PAYMENT_OUT_HISTORY);
+};
+
+export const getUserCallHistory = () => {
+  return get(endpoints.GET_USER_CALL_HISTORY);
+};
+
+export const getCaCallHistory = () => {
+  return get(endpoints.GET_CA_CALL_HISTORY);
 };

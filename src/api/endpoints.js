@@ -8,6 +8,8 @@ const endpoints = {
   UPDATE_USER_ONLINE_STATUS: "/auth/user/updateOnlineStatus",
   GET_USER_PAYMENT_HISTORY: "/payment/getUserPaymentHistory",
   GET_CA_PAYMENT_OUT_HISTORY: "/payment/getCAPaymentOutHistory",
+  GET_CA_CALL_HISTORY: "/call/getCallLogsForCA",
+  GET_USER_CALL_HISTORY: "/call/getCallLogsForUser",
 };
 
 export default endpoints;

@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { getUserPaymentHistory, getCAPaymentOutHistory } from "../../../../api";
+import {
+  getUserPaymentHistory,
+  getCAPaymentOutHistory,
+  getUserCallHistory,
+  getCaCallHistory,
+} from "../../../../api";
 
 const useHistoryHook = () => {
   const [tabs, setTabs] = useState([]);
@@ -24,12 +29,30 @@ const useHistoryHook = () => {
       let response;
       if (historyType === "RECHARGE_HISTORY") {
         response = await getUserPaymentHistory();
+
+        if (response?.status === 200 && response?.data?.payments) {
+          setData(response?.data?.payments);
+        }
       } else if (historyType === "PAYOUT_HISTORY") {
         response = await getCAPaymentOutHistory();
-      }
 
-      if (response?.status === 200 && response?.data?.payments) {
-        setData(response?.data?.payments);
+        if (response?.status === 200 && response?.data?.payments) {
+          setData(response?.data?.payments);
+        }
+      } else if (historyType === "CALL_HISTORY") {
+        if (user?.data?.user_type === "USER") {
+          response = await getUserCallHistory();
+
+          if (response?.status === 200 && response?.data?.callLogs) {
+            setData(response?.data?.callLogs);
+          }
+        } else if (user?.data?.user_type === "CA") {
+          response = await getCaCallHistory();
+
+          if (response?.status === 200 && response?.data?.callLogs) {
+            setData(response?.data?.callLogs);
+          }
+        }
       }
     } catch (error) {
       console.log(`History Error ${historyType}`, error);
