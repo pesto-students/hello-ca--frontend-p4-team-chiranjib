@@ -1,16 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getTopics } from "../../../../api";
 
 import useStartAudioCallHook from "./useStartAudioCall.hook";
+
+import { getUserDetails } from "../../../../store/common/User/actions";
 
 const useTopics = () => {
   const [topics, setTopics] = useState(null);
   const [isTopicsLoading, setIsTopicsLoading] = useState(false);
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [showCallConnectedModal, setCallConnectedModal] = useState(false);
+
+  const dispatch = useDispatch();
 
   const {
     startAudioCall,
@@ -56,6 +60,7 @@ const useTopics = () => {
 
   const closeCallModal = () => {
     setCallConnectedModal(false);
+    dispatch(getUserDetails());
   };
 
   const updateSpecilizaions = () => {
