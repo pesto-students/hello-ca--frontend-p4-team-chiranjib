@@ -37,9 +37,17 @@ const History = () => {
           },
           {
             label: "Topics",
-            accessor: "Legs",
-            component: (props) =>
-              capitalize(props?.row?.Legs[0]?.CauseCode || ""),
+            accessor: "CustomField",
+            component: (props) => (
+              <div className="topics-badge-container">
+                {(props?.row?.CustomField || "").split(",").map((topic) => (
+                  <span key={`topics-badge-${topic}`} className="topic-badge">
+                    {capitalize(topic)}
+                  </span>
+                ))}
+              </div>
+            ),
+            // capitalize(props?.row?.CustomField || ""),
           },
           {
             label: "Listen",
