@@ -10,6 +10,7 @@ const endpoints = {
   GET_CA_PAYMENT_OUT_HISTORY: "/payment/getCAPaymentOutHistory",
   GET_CA_CALL_HISTORY: "/call/getCallLogsForCA",
   GET_USER_CALL_HISTORY: "/call/getCallLogsForUser",
+  START_CALL: "/start-call",
 };
 
 export default endpoints;

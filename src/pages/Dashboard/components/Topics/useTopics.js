@@ -1,13 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
 import { getTopics } from "../../../../api";
+
+import useStartAudioCallHook from "./useStartAudioCall.hook";
 
 const useTopics = () => {
   const [topics, setTopics] = useState(null);
   const [isTopicsLoading, setIsTopicsLoading] = useState(false);
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [showCallConnectedModal, setCallConnectedModal] = useState(false);
+
+  const {
+    startAudioCall,
+    isLoading: startCallLoading,
+    response: startCallResponse,
+    error: startCallError,
+  } = useStartAudioCallHook();
 
   const user = useSelector((state) => state.user);
 
@@ -37,9 +47,11 @@ const useTopics = () => {
   };
 
   const startCall = () => {
-    //  start call.
-    console.log(selectedTopics);
-    setCallConnectedModal(true);
+    startAudioCall({
+      caller: user?.data?.mobile,
+      timeLimit: user?.data?.available_talk_time,
+      topics: selectedTopics?.join(",") || "",
+    });
   };
 
   const closeCallModal = () => {
@@ -50,6 +62,12 @@ const useTopics = () => {
     //  start call.
     console.log(selectedTopics);
   };
+
+  useEffect(() => {
+    if (startCallResponse?.Call?.Status === "in-progress") {
+      setCallConnectedModal(true);
+    }
+  }, [startCallResponse, startCallError]);
 
   useEffect(() => {
     getTopicsWrapper();
@@ -79,6 +97,7 @@ const useTopics = () => {
     updateSpecilizaions,
     showCallConnectedModal,
     closeCallModal,
+    startCallLoading,
   };
 };
 

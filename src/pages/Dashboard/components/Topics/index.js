@@ -24,6 +24,7 @@ const Topics = () => {
     updateSpecilizaions,
     showCallConnectedModal,
     closeCallModal,
+    startCallLoading,
   } = useTopics();
 
   const user = useSelector((state) => state.user);
@@ -56,7 +57,8 @@ const Topics = () => {
             label={"Get Started"}
             className="get-started-btn"
             onClick={startCall}
-            disabled={selectedTopics.length === 0}
+            disabled={selectedTopics.length === 0 || startCallLoading}
+            isLoading={startCallLoading}
           />
         ) : user?.data?.user_type === "CA" ? (
           <>
@@ -83,7 +85,10 @@ const Topics = () => {
         handleClose={closeCallModal}
         showCloseBtn
       >
-        <CallModal handleClose={closeCallModal} />
+        <CallModal
+          timeLimit={user?.data?.available_talk_time}
+          handleClose={closeCallModal}
+        />
       </Modal>
     </Grid>
   );

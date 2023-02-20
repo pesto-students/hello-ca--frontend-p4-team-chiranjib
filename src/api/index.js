@@ -44,3 +44,7 @@ export const getUserCallHistory = () => {
 export const getCaCallHistory = () => {
   return get(endpoints.GET_CA_CALL_HISTORY);
 };
+
+export const startCall = (data) => {
+  return post(endpoints.START_CALL, {}, data);
+};
