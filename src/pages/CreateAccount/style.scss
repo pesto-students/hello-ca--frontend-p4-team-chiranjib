@@ -1,0 +1,12 @@
+.create-account-container {
+  width: 100vw;
+  height: 100vh;
+  .create-account-image-container {
+    background-image: url("../../assets/img/girl-hero-bg.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    height: calc(100vh - 84px);
+    width: 100%;
+  }
+}

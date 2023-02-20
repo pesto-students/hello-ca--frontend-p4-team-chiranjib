@@ -1,0 +1,82 @@
+import React, { useState } from "react";
+import ContentLoader from "react-content-loader";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import Button from "../Button";
+
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+
+import { removeUserDetails } from "../../store/common/User/actions";
+
+import "./style.scss";
+
+const Loader = () => {
+  return (
+    <div style={{ width: "100px" }}>
+      <ContentLoader viewBox="0 0 100 30">
+        <rect x="0" y="0" rx="10" ry="10" width="100" height="30" />
+      </ContentLoader>
+    </div>
+  );
+};
+
+const AuthMenu = () => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showAuthMenu, setShowAuthMenu] = useState(false);
+
+  return user?.isLoading ? (
+    <Loader />
+  ) : user?.data ? (
+    <div className="auth-container">
+      <Button
+        label={
+          <span className="auth-text">
+            {user?.data &&
+              `Hi, ${user?.data?.first_name} ${user?.data?.last_name}`}{" "}
+            <ArrowDropDownIcon />
+          </span>
+        }
+        onClick={() => setShowAuthMenu(!showAuthMenu)}
+      />
+      {showAuthMenu && (
+        <ul className="options-wrapper">
+          <li
+            className="auth-menu-option"
+            onClick={() => {
+              setShowAuthMenu(false);
+              navigate("/dashboard");
+            }}
+          >
+            My Dashboard
+          </li>
+          <li
+            className="auth-menu-option"
+            onClick={() => {
+              setShowAuthMenu(false);
+              localStorage.removeItem("authToken");
+              dispatch(removeUserDetails());
+              navigate("/");
+            }}
+          >
+            Logout
+          </li>
+        </ul>
+      )}
+    </div>
+  ) : (
+    <>
+      <Button
+        label={"Login"}
+        className="login-btn"
+        variant={"secondary"}
+        onClick={() => navigate("/login")}
+      />
+      <Button label={"Sign Up"} onClick={() => navigate("/create-account")} />
+    </>
+  );
+};
+
+export default AuthMenu;

@@ -1,0 +1,17 @@
+.custom-alert {
+  border: 1px solid green;
+  border-radius: 20px;
+  padding: 10px 20px;
+  &.alert-error {
+    border-color: red;
+    color: red;
+  }
+  &.alert-success {
+    border-color: green;
+    color: green;
+  }
+  &.alert-info {
+    border-color: skyblue;
+    color: skyblue;
+  }
+}
